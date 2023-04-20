@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/solid.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"  />
+    <title>social-lyle</title>
+</head>
+<body>
+
+    <!-----------------------NAVBAR------------------------------>
+    <nav>
+        <div class="container">
+            <h2 class="logo">lyle-social</h2>
+            <div class="search-bar">
+                <i class="uil uil-search"></i>
+                <input type="search" name="" id="" placeholder="Search for creators, inspirations and projects.">
+            </div>
+            <div class="create">
+                <button class="btn btn-primary" id="create-post-btn">Create Post</button>
+                <div class="profile-photo">
+                    <img src="{{ url_for('static', filename='img/default.jpeg') }}" alt="">
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-----------------------MAIN------------------------------>
+    <main>
+
+        <div class="container">
+
+            <!---------------MIDDLE------------------------->
+            <div class="middle">
+    
+                <!------------ STORIES ------------------>
+                <div class="stories">
+    
+                    <div class="story">
+                        <div class="profile-photo">
+                            <img src="{{ url_for('static', filename='img/profile-8.jpg') }}" alt="">
+                        </div>
+                        <p class="name">
+                            Your story
+                        </p>
+                    </div>
+    
+                    <div class="story">
+                        <div class="profile-photo">
+                            <img src="{{ url_for('static', filename='img/profile-9.jpg') }}" alt="">
+                        </div>
+                        <p class="name">
+                            James Otieno
+                        </p>
+                    </div>
+    
+                    <div class="story">
+                        <div class="profile-photo">
+                            <img src="{{ url_for('static', filename='img/profile-10.jpg') }}" alt="">
+                        </div>
+                        <p class="name">
+                            Michael Owino
+                        </p>
+                    </div>
+    
+                    <div class="story">
+                        <div class="profile-photo">
+                            <img src="{{ url_for('static', filename='img/profile-11.jpg') }}" alt="">
+                        </div>
+                        <p class="name">
+                            Jano Mureithi
+                        </p>
+                    </div>
+    
+                    <div class="story">
+                        <div class="profile-photo">
+                            <img src="{{ url_for('static', filename='img/profile-12.jpg') }}" alt="">
+                        </div>
+                        <p class="name">
+                            Martha Koome
+                        </p>
+                    </div>
+    
+                </div>
+                <!----------------- END OF STORIES ----------------------->
+
+                <!------------------- FEEDS --------------------->
+                <div class="feeds">
+
+                    <!---------------FEED 2------------------------>
+                    <div class="feed">
+
+                        <div class="head">
+                            <div class="user">
+                                <div class="profile-photo">
+                                    <img src="{{ url_for('static', filename='img/profile-14.jpg') }}" alt="">
+                                </div>
+                                <div class="ingo">
+                                    <h3 class="user-name">Dave Clark</h3>
+                                    <small class="post-id">Dubai, 15 MINUTES AGO</small>
+                                </div>
+                            </div>
+
+                            <span class="edit">
+                                <i class="uil uil-ellipsis-h"></i>
+                            </span>
+
+                        </div>
+
+                        <div class="post-text text-muted">
+                            Some really short, interesting post text. Some 
+                            really short, interesting post text.
+                        </div>
+
+                        <div class="photo">
+                            <img src="{{ url_for('static', filename='img/feed-2.jpg') }}" alt="">
+                        </div>
+
+                        <div class="action-buttons">
+
+                            <div class="interaction-button">
+                                <div class="like-button">
+                                    <span>
+                                        <i class="fa-solid fa-heart"></i>
+                                    </span>
+                                    <span>
+                                        <i class="fa-regular fa-heart active"></i>
+                                    </span>
+                                </div>
+                                <span>
+                                    <i class="fa-regular fa-comment active"></i>
+                                </span>
+                            </div>
+
+                            <div class="bookmark">
+                                <span>
+                                    <i class="fa-regular fa-pen-to-square active"></i>
+                                </span>
+                                <span>
+                                    <i class="fa-regular fa-trash-can active"></i>
+                                </span>                                
+                            </div>
+
+                        </div>
+
+                        <div class="liked-by">
+                            <span>
+                                <img src="{{ url_for('static', filename='img/profile-10.jpg') }}" alt="">
+                            </span>
+                            <span>
+                                <img src="{{ url_for('static', filename='img/profile-11.jpg') }}" alt="">
+                            </span>
+                            <span>
+                                <img src="{{ url_for('static', filename='img/profile-12.jpg') }}" alt="">
+                            </span>
+                            <p>Liked by <b>Lyle Okoth</b> and 10 others<b></b> </p>
+                        </div>
+
+                        <div class="caption">
+                            <p>
+                                <b>Lyle Okoth</b> some sample caption 
+                                <span class="hashtag">#lifestyle</span> 
+                            </p>
+                        </div>
+
+                        <div class="comments text-muted">
+                            View all 25 comments
+                        </div>
+
+                    </div>
+                    <!---------------END OF FEED 2------------------------>
+
+                </div>
+    
+            </div>
+    
+        </div>
+
+    </main>
+
+</body>
+</html>

@@ -41,3 +41,15 @@ run-prod:
 
 dev:
 	@docker-compose -f docker-compose-dev.yaml up --build
+
+run-db:
+	@docker-compose -f services/database/docker-compose.yml up --build
+
+stop-db:
+	@docker-compose -f services/database/docker-compose.yml down -v
+
+create-db: 
+	@python services/app/manage.py create_db 
+
+seed-db: 
+	@python services/app/manage.py seed_db

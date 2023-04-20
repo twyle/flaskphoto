@@ -1,0 +1,308 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+:root{
+    --primary-color-hue: 252;
+
+    --dark-color-lightness: 17%;
+    --light-color-lightness: 95%;
+    --white-color-lightness: 100%;
+
+    --color-white: hsl(252, 30%, var(--white-color-lightness));
+    --color-light: hsl(252, 30%, var(--light-color-lightness));
+    --color-gray: hsl(252, 15%, 65%);
+    --color-primary: hsl(var(--primary-color-hue), 75%, 60%);
+    --color-secondary: hsl(252, 100%, 90%);
+    --color-success: hsl(120, 95%, 65%);
+    --color-danger: hsl(0, 95%, 65%);
+    --color-dark: hsl(252, 30%, var(--dark-color-lightness));
+    --color-black: hsl(252, 30%, 10%);
+
+    --border-radius: 2rem;
+    --card-border-radius: 1rem;
+    --btn-padding: 0.6rem 2rem;
+    --search-padding: 0.6rem 1rem;
+    --card-padding: 1rem;
+
+    --sticky-top-left: 5.4rem;
+    --sticky-to-right: -18rem;
+}
+
+*, *::before, *::after{
+    margin: 0;
+    padding: 0;
+    outline: 0;
+    box-sizing: border-box;
+    text-decoration: none;
+    list-style: none;
+    border: none;
+}
+
+body{
+    font-family: 'Poppins', sans-serif;
+    color: var(--color-dark);
+    background: var(--color-light);
+    overflow-x: hidden;
+}
+
+/* GENERAL STYLES */
+.container{
+    width: 90%;
+    margin: 0 auto;
+}
+
+.profile-photo{ 
+    width: 2.7rem;
+    aspect-ratio: 1/1;
+    border-radius: 50%;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+img{
+    display: block;
+    width: 100%;
+}
+
+.btn{
+    display: inline-block;
+    padding: var(--btn-padding);
+    font-weight: 500;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    transition: all 300ms ease;
+    font-size: 0.9rem;
+    background: var(--color-gray);
+}
+
+.btn:hover{
+    opacity: 0.8;
+}
+
+i:hover{
+    cursor: pointer;
+}
+
+.btn-primary{
+    background: var(--color-primary);
+    color: white;
+}
+
+.text-bold{
+    font-weight: 500;
+}
+
+.text-muted{
+    color: var(--color-gray);
+}
+
+/*============= NAVBAR =============*/
+nav{
+    width: 100%;
+    background: var(--color-white);
+    padding: 0.7rem 0;
+    position: fixed;
+    top: 0;
+    z-index: 10;
+}
+
+nav .container{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.search-bar{
+    background: var(--color-light);
+    border-radius: var(--border-radius);
+    padding: var(--search-padding);
+}
+
+.search-bar input[type="search"]{
+    background: transparent;
+    width: 30vw;
+    margin-left: 1rem;
+    font-size: 0.9rem;
+    color: var(--color-dark);
+}
+
+nav .search-bar input[type="search"]::placeholder{
+    color: var(--color-gray);
+}
+
+nav .create{
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+
+/* =================== MAIN ========================= */
+main{
+    position: relative;
+    top: 5.4rem;
+}
+
+main .container{
+    position: relative;
+}
+
+/* ================= MIDDLE ===================== */
+.middle .stories{
+    display: flex;
+    justify-content: space-between;
+    height: 10rem;
+    gap: 0.5rem;
+    z-index: -1;
+}
+
+.middle .stories .story{
+    padding: var(--card-padding);
+    border-radius: var(--card-border-radius);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    color: white;
+    font-size: 0.75rem;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+}
+
+.middle .stories .story::before{
+    content: "";
+    display: block;
+    width: 100%;
+    height: 5rem;
+    background: linear-gradient(transparent, rgba(0,0,0,0.75));
+    position: absolute;
+    bottom: 0;
+}
+
+.middle .stories .story .name{
+    z-index: 2;
+}
+
+.middle .stories .story:nth-child(1){
+    background: url('../img/story-1.jpg') no-repeat center center/cover;
+}
+
+.middle .stories .story:nth-child(2){
+    background: url('../img/story-2.jpg') no-repeat center center/cover;
+}
+
+.middle .stories .story:nth-child(3){
+    background: url('../img/story-3.jpg') no-repeat center center/cover;
+}
+
+.middle .stories .story:nth-child(4){
+    background: url('../img/story-4.jpg') no-repeat center center/cover;
+}
+
+.middle .stories .story:nth-child(5){
+    background: url('../img/story-5.jpg') no-repeat center center/cover;
+}
+
+.middle .stories .story:nth-child(6){
+    background: url('../img/story-6.jpg') no-repeat center center/cover;
+}
+
+.middle .stories .story .profile-photo{
+    width: 2rem;
+    height: 2rem;
+    align-self: start;
+    border: 3px solid var(--color-primary);
+}
+
+/* --------------------- FEEDS -------------- */
+.feed{
+    background: var(--color-white);
+    border-radius: var(--card-border-radius);
+    padding: var(--card-padding);
+    margin: 1rem 0;
+    font-size: 0.85rem;
+    line-height: 1.5;
+}
+
+.feed .post-text{
+    border-radius: var(--card-border-radius);
+    padding: 0.7rem;
+    margin: 0.5rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    font-style: italic;
+}
+
+.feed .head{
+    display: flex;
+    justify-content: space-between;
+}
+
+.feed .user{
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.middle .feed .context-menu{
+    position: relative;
+}
+
+.feed .photo{
+    border-radius: var(--card-border-radius);
+    overflow: hidden;
+    margin: 0.7rem 0;
+}
+
+.middle .feed .action-buttons{
+    display: flex;
+    justify-content: space-between; 
+    font-size: 1.4rem;
+    margin: 0.6rem;
+    /* border: 1px solid var(--color-primary); */
+ }
+ 
+ .middle .feed .action-buttons .interaction-button{
+     display: flex;
+     gap: 0.5rem;
+ }
+ 
+ .middle .feed .action-buttons .interaction-button i{
+     display: none;
+ }
+ 
+ .middle .feed .action-buttons .interaction-button i.active{
+     display: block;
+ }
+
+ .middle .liked-by{
+    display: flex;
+}
+
+.middle .liked-by span{
+    width: 1.4rem;
+    height: 1.4rem;
+    display: block;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 2px solid var(--color-white);
+    margin-left: -0.6rem;
+}
+
+.middle .liked-by span:first-child{
+    margin: 0;
+}
+
+.middle .liked-by p{
+    margin-left: 0.5rem;
+}
+
+.middle .comments{
+    cursor: pointer;
+}
+
+@media screen and (min-width: 992px){
+    .container{
+        width: 70%;
+        margin: 0 auto;
+    }
+}
