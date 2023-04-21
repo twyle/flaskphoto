@@ -410,6 +410,58 @@ form p a{
     display: none;
 }
 
+/* ============== EDIT POST ============= */
+.edit-post{
+    background: rga(255,255,255,0.5);
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    text-align: center;
+    display: grid;
+    place-items: center;
+    font-size: 0.9rem;
+    display: none;
+}
+
+.edit-post .card{
+    background: var(--color-white);
+    padding: 0.5rem;
+    border-radius: var(--card-border-radius);
+    width: 50%;
+    box-shadow: 0 0 1rem var(--color-primary);
+}
+
+.create-text{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 1rem;
+    background: var(--color-white);
+    padding: 0.4rem var(--card-padding);
+    border-radius: var(--border-radius);
+}
+
+.create-text .create{
+    justify-self: start;
+    width: 100%;
+    padding-left: 1rem;
+    margin-right: 1rem;
+    display: flex;
+}
+
+.create-text input[type="text"]{
+    justify-self: start;
+    width: 100%;
+    padding-left: 1rem;
+    background: transparent;
+    color: var(--color-dark);
+    margin-right: 1rem;
+}
+
 .edit-profile{
     display: none;
 }

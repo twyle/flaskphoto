@@ -92,7 +92,7 @@
                 <div class="feeds">
 
                     <!---------------FEED 2------------------------>
-                    <div class="feed">
+                    <div class="feed" id="2">
 
                         <div class="head">
                             <div class="user">
@@ -175,7 +175,7 @@
                     <!---------------END OF FEED 2------------------------>
 
                     <!---------------FEED 3------------------------>
-                    <div class="feed">
+                    <div class="feed" id="3">
 
                         <div class="head">
                             <div class="user">
@@ -280,12 +280,12 @@
                     <div class="input-group">
 
                         <div class="input-field">
-                            <textarea name="" id="" placeholder="What's on your mind?" rows="5"></textarea>
+                            <textarea name="text" placeholder="What's on your mind?" rows="5"></textarea>
                         </div>
 
                         <div class="input-field">
                             <i class="uil uil-envelope-alt"></i>
-                            <input type="text" name="" placeholder="Location" id="">
+                            <input type="text" name="location" placeholder="Location">
                         </div>
 
                     </div>
@@ -315,17 +315,17 @@
 
                         <div class="input-field">
                             <i class="uil uil-user-circle"></i>
-                            <input type="text" name="" placeholder="Name" id="">
+                            <input type="text" name="" placeholder="Name">
                         </div>
 
                         <div class="input-field">
                             <i class="uil uil-envelope-alt"></i>
-                            <input type="email" name="" placeholder="Email" id="">
+                            <input type="email" name="" placeholder="Email">
                         </div>
 
                         <div class="input-field">
                             <i class="uil uil-padlock"></i>
-                            <input type="password" name="" placeholder="Handle" id="">
+                            <input type="password" name="" placeholder="Handle">
                         </div>
 
                     </div>
@@ -341,6 +341,58 @@
 
     </div>
     <!--------- END OF EDIT PROFILE -----------> 
+
+    <!--------- EDIT POST ----------->    
+    <div class="edit-post">
+
+        <div class="card">
+
+            <div class="feed" id="11111">
+
+                <div class="head">
+                    
+                    <div class="user">
+                        <div class="profile-photo">
+                            <img class="profile-photo-img" src="{{ url_for('static', filename='img/profile-2.jpg') }}" alt="">
+                        </div>
+                        <div class="ingo">
+                            <h3 class="edit-user-name">Lana Rose</h3>
+                            <small class="edit-user-location">Dubai, 15 MINUTES AGO</small>
+                        </div>
+                    </div>
+
+                    <span class="edit">
+                        <label class="custom-file-upload">
+                            <i class="uil uil-image-plus post-image-upload"></i> 
+                        </label>
+                    </span>
+
+                </div>
+
+                <div class="photo">
+                    <img class="post-photo" src="{{ url_for('static', filename='img/feed-1.jpg') }}" alt="">
+                </div>
+
+                <div class="create-text">
+                
+                    <div class="profile-photo">
+                        <img class="text-photo-img" src="{{ url_for('static', filename='img/profile-0.jpg') }}" alt="">
+                    </div>
+    
+                    <div class="create">
+                        <input class="post-text" type="text" name="" placeholder="What's on your mind, Lyle?">
+                    </div>
+
+                    <button type="submit" class="btn btn-primary submit-edited-post">Post</button>
+                    
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+    <!--------- END OF EDIT POST ----------->
 
     <script src="{{ url_for('static', filename='js/index.js') }}"></script>
 
