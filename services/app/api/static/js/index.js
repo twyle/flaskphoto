@@ -10,6 +10,21 @@ const updatePostImage = document.querySelector('.post-image-upload')
 let image;
 let oldPost;
 
+//VIEW COMMENTS
+const postCommentBtns = document.querySelectorAll('.comments')
+const postComments = document.querySelector('.post-comments')
+
+//PROFILE DROPDOWN
+const profileDropdwon = document.querySelector('.profile-photo')
+const profileCtxMenu = document.querySelector('.profile-ctx')
+
+//PROFILE
+const userProfileBtn = document.querySelector('.profile')
+const editProfileDiv = document.querySelector('.edit-profile')
+
+//BEFREIEND UNFRIEND
+const postMenuBtns = document.querySelectorAll('.post-menu-btn')
+
 //CREATE POST
 createPostBtn.addEventListener('click', () => {
     createPostFormDiv.style.display = 'grid';
@@ -151,4 +166,49 @@ editPostBtn.addEventListener('click', (e) => {
         )
 
     editPostDiv.style.display = 'none'
+})
+
+
+postCommentBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+        postComments.style.display = 'block'
+    })
+})
+
+postComments.addEventListener('click', (e) => {
+    if(e.target.classList.contains('post-comments')){
+        postComments.style.display = 'none'
+    }
+})
+
+//PROFILE DROPDOWN
+profileDropdwon.addEventListener('click', () => {
+    profileCtxMenu.style.display = 'block'
+    setTimeout(() => {
+        profileCtxMenu.style.display = 'none'
+    }, 2000)
+})
+
+//EDIT PROFILE
+userProfileBtn.addEventListener('click', () => {
+    profileCtxMenu.style.display = 'none'
+    editProfileDiv.style.display = 'block'
+})
+
+editProfileDiv.addEventListener('click', (e) => {
+    if(e.target.classList.contains('edit-profile')){
+        editProfileDiv.style.display = 'none'
+    }
+})
+
+//BEFREIEND UNFRIEND
+postMenuBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+        const postMenuDiv = btn.nextElementSibling
+        console.log(postMenuDiv)
+        postMenuDiv.style.display = 'block'
+        setTimeout(() => {
+            postMenuDiv.style.display = 'none'
+        }, 2000)
+    })
 })

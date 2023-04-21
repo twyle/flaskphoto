@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,9 +8,11 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/solid.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"  />
     <title>flaskphoto</title>
 </head>
+
 <body>
 
     <!-----------------------NAVBAR------------------------------>
@@ -24,8 +27,32 @@
                 <button class="btn btn-primary create-post-btn">Create Post</button>
                 <div class="profile-photo">
                     <img src="{{ url_for('static', filename='img/default.jpeg') }}" alt="">
+                
                 </div>
             </div>
+
+            <div class="context-menu">
+                <div class="dropdownmenu profile-ctx">
+                    <div class="card">
+                        <div class="profile ctx-menu active">
+                            <span>
+                                <i class="fa-regular fa-message"></i>
+                            </span>
+                            <small class="active-menu menu-item">Profile</small>
+                        </div>
+                        <div class="logout ctx-menu">
+                            <span>
+                                <i class="fa-solid fa-rectangle-xmark"></i>
+                            </span>
+                            <a href="{{ url_for('auth.logout') }}">
+                                <small class="menu-item">Logout</small>
+                            </a>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+
         </div>
     </nav>
 
@@ -36,10 +63,10 @@
 
             <!---------------MIDDLE------------------------->
             <div class="middle">
-    
+
                 <!------------ STORIES ------------------>
                 <div class="stories">
-    
+
                     <div class="story">
                         <div class="profile-photo">
                             <img src="{{ url_for('static', filename='img/profile-8.jpg') }}" alt="">
@@ -48,7 +75,7 @@
                             Your story
                         </p>
                     </div>
-    
+
                     <div class="story">
                         <div class="profile-photo">
                             <img src="{{ url_for('static', filename='img/profile-9.jpg') }}" alt="">
@@ -57,7 +84,7 @@
                             James Otieno
                         </p>
                     </div>
-    
+
                     <div class="story">
                         <div class="profile-photo">
                             <img src="{{ url_for('static', filename='img/profile-10.jpg') }}" alt="">
@@ -66,7 +93,7 @@
                             Michael Owino
                         </p>
                     </div>
-    
+
                     <div class="story">
                         <div class="profile-photo">
                             <img src="{{ url_for('static', filename='img/profile-11.jpg') }}" alt="">
@@ -75,7 +102,7 @@
                             Jano Mureithi
                         </p>
                     </div>
-    
+
                     <div class="story">
                         <div class="profile-photo">
                             <img src="{{ url_for('static', filename='img/profile-12.jpg') }}" alt="">
@@ -84,7 +111,7 @@
                             Martha Koome
                         </p>
                     </div>
-    
+
                 </div>
                 <!----------------- END OF STORIES ----------------------->
 
@@ -106,13 +133,33 @@
                             </div>
 
                             <span class="edit">
-                                <i class="uil uil-ellipsis-h"></i>
+                                <i class="uil uil-ellipsis-h post-menu-btn"></i>
+
+                                <div class="post-menu">
+                                    <div class="dropdownmenu">
+                                        <div class="card">
+                                            <div class="befriend ctx-menu">
+                                                <span>
+                                                    <i class="fa-solid fa-user-plus"></i>
+                                                </span>
+                                                <small class="menu-item">Befriend</small>
+                                            </div>
+                                            <div class="unfriend ctx-menu">
+                                                <span>
+                                                    <i class="fa-solid fa-user-minus" ></i>
+                                                </span>
+                                                <small class="menu-item">Unfriend</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
                             </span>
 
                         </div>
 
                         <div class="post-text text-muted">
-                            Some really short, interesting post text. Some 
+                            Some really short, interesting post text. Some
                             really short, interesting post text.
                         </div>
 
@@ -142,7 +189,7 @@
                                 </span>
                                 <span>
                                     <i class="fa-regular fa-trash-can active"></i>
-                                </span>                                
+                                </span>
                             </div>
 
                         </div>
@@ -162,8 +209,8 @@
 
                         <div class="caption">
                             <p>
-                                <b>Lyle Okoth</b> some sample caption 
-                                <span class="hashtag">#lifestyle</span> 
+                                <b>Lyle Okoth</b> some sample caption
+                                <span class="hashtag">#lifestyle</span>
                             </p>
                         </div>
 
@@ -191,13 +238,33 @@
                             </div>
 
                             <span class="edit">
-                                <i class="uil uil-ellipsis-h"></i>
+                                <i class="uil uil-ellipsis-h post-menu-btn"></i>
+
+                                <div class="post-menu">
+                                    <div class="dropdownmenu">
+                                        <div class="card">
+                                            <div class="befriend ctx-menu">
+                                                <span>
+                                                    <i class="fa-solid fa-user-plus"></i>
+                                                </span>
+                                                <small class="menu-item">Befriend</small>
+                                            </div>
+                                            <div class="unfriend ctx-menu">
+                                                <span>
+                                                    <i class="fa-solid fa-user-minus" ></i>
+                                                </span>
+                                                <small class="menu-item">Unfriend</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
                             </span>
 
                         </div>
 
                         <div class="post-text text-muted">
-                            Some really short, interesting post text. Some 
+                            Some really short, interesting post text. Some
                             really short, interesting post text.
                         </div>
 
@@ -228,7 +295,7 @@
                                 <span>
                                     <i class="fa-regular fa-trash-can active"></i>
                                 </span>
-                                
+
                             </div>
 
                         </div>
@@ -248,8 +315,8 @@
 
                         <div class="caption">
                             <p>
-                                <b>Lyle Okoth</b> some sample caption 
-                                <span class="hashtag">#lifestyle</span> 
+                                <b>Lyle Okoth</b> some sample caption
+                                <span class="hashtag">#lifestyle</span>
                             </p>
                         </div>
 
@@ -261,14 +328,14 @@
                     <!---------------END OF FEED 3------------------------>
 
                 </div>
-    
+
             </div>
-    
+
         </div>
 
     </main>
 
-    <!--------- CREATE POST ----------->    
+    <!--------- CREATE POST ----------->
     <div class="create-post form">
 
         <div class="card">
@@ -302,7 +369,7 @@
     </div>
     <!--------- END OF CREATE POST ----------->
 
-    <!--------- EDIT PROFILE ----------->    
+    <!--------- EDIT PROFILE ----------->
     <div class="edit-profile form">
 
         <div class="card">
@@ -340,9 +407,9 @@
         </div>
 
     </div>
-    <!--------- END OF EDIT PROFILE -----------> 
+    <!--------- END OF EDIT PROFILE ----------->
 
-    <!--------- EDIT POST ----------->    
+    <!--------- EDIT POST ----------->
     <div class="edit-post">
 
         <div class="card">
@@ -350,10 +417,11 @@
             <div class="feed" id="11111">
 
                 <div class="head">
-                    
+
                     <div class="user">
                         <div class="profile-photo">
-                            <img class="profile-photo-img" src="{{ url_for('static', filename='img/profile-2.jpg') }}" alt="">
+                            <img class="profile-photo-img" src="{{ url_for('static', filename='img/profile-2.jpg') }}"
+                                alt="">
                         </div>
                         <div class="ingo">
                             <h3 class="edit-user-name">Lana Rose</h3>
@@ -363,7 +431,7 @@
 
                     <span class="edit">
                         <label class="custom-file-upload">
-                            <i class="uil uil-image-plus post-image-upload"></i> 
+                            <i class="uil uil-image-plus post-image-upload"></i>
                         </label>
                     </span>
 
@@ -374,17 +442,17 @@
                 </div>
 
                 <div class="create-text">
-                
+
                     <div class="profile-photo">
                         <img class="text-photo-img" src="{{ url_for('static', filename='img/profile-0.jpg') }}" alt="">
                     </div>
-    
+
                     <div class="create">
                         <input class="post-text" type="text" name="" placeholder="What's on your mind, Lyle?">
                     </div>
 
                     <button type="submit" class="btn btn-primary submit-edited-post">Post</button>
-                    
+
                 </div>
 
             </div>
@@ -394,7 +462,58 @@
     </div>
     <!--------- END OF EDIT POST ----------->
 
-    <script src="{{ url_for('static', filename='js/index.js') }}"></script>
+    <!--------- POST COMMENTS ----------->
+    <div class="post-comments">
+
+        <div class="card">
+
+            <!-----POST COMMENTS POPUP----------->
+            <div class="post-comments-popup">
+                <div>
+                    <div class="profile-photo">
+                        <img src="{{ url_for('static', filename='img/profile-2.jpg') }}" alt="">
+                    </div>
+                    <div class="notification-body">
+                        <b>Mollette Okoth</b> accepted your friend request
+                        <small class="text muted">2 DAYS AGO</small>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="profile-photo">
+                        <img src="./img/profile-3.jpg" alt="">
+                    </div>
+                    <div class="notification-body">
+                        <b>Felix Okoth</b> liked your post
+                        <small class="text muted">2 MINUTES AGO</small>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="profile-photo">
+                        <img src="./img/profile-4.jpg" alt="">
+                    </div>
+                    <div class="notification-body">
+                        <b>Lewis Yamo</b> commented on your post
+                        <small class="text muted">2 HOURS AGO</small>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="profile-photo">
+                        <img src="./img/profile-5.jpg" alt="">
+                    </div>
+                    <div class="notification-body">
+                        <b>Merry Munane</b> and <b>21 others</b> liked your post
+                        <small class="text muted">2 MINUTES AGO</small>
+                    </div>
+                </div>
+
+            </div>
+            <!-----END OF POST COMMENTS POPUP----------->
+
+            <script src="{{ url_for('static', filename='js/index.js') }}"></script>
 
 </body>
+
 </html>
