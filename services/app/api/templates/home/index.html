@@ -8,20 +8,20 @@
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/solid.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"  />
-    <title>social-lyle</title>
+    <title>flaskphoto</title>
 </head>
 <body>
 
     <!-----------------------NAVBAR------------------------------>
     <nav>
         <div class="container">
-            <h2 class="logo">lyle-social</h2>
+            <h2 class="logo">flaskphoto</h2>
             <div class="search-bar">
                 <i class="uil uil-search"></i>
                 <input type="search" name="" id="" placeholder="Search for creators, inspirations and projects.">
             </div>
             <div class="create">
-                <button class="btn btn-primary" id="create-post-btn">Create Post</button>
+                <button class="btn btn-primary create-post-btn">Create Post</button>
                 <div class="profile-photo">
                     <img src="{{ url_for('static', filename='img/default.jpeg') }}" alt="">
                 </div>
@@ -267,6 +267,82 @@
         </div>
 
     </main>
+
+    <!--------- CREATE POST ----------->    
+    <div class="create-post form">
+
+        <div class="card">
+            <div class="form-box">
+
+                <h1>Create Post</h1>
+
+                <form class="create-post-form" action="{{ url_for('post.create_post') }}" method="post">
+                    <div class="input-group">
+
+                        <div class="input-field">
+                            <textarea name="" id="" placeholder="What's on your mind?" rows="5"></textarea>
+                        </div>
+
+                        <div class="input-field">
+                            <i class="uil uil-envelope-alt"></i>
+                            <input type="text" name="" placeholder="Location" id="">
+                        </div>
+
+                    </div>
+
+                    <div class="btn-field">
+                        <button type="submit" class="submit-post">Create Post</button>
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+
+    </div>
+    <!--------- END OF CREATE POST ----------->
+
+    <!--------- EDIT PROFILE ----------->    
+    <div class="edit-profile form">
+
+        <div class="card">
+            <div class="form-box">
+
+                <h1>Update Profile</h1>
+
+                <form action="">
+                    <div class="input-group">
+
+                        <div class="input-field">
+                            <i class="uil uil-user-circle"></i>
+                            <input type="text" name="" placeholder="Name" id="">
+                        </div>
+
+                        <div class="input-field">
+                            <i class="uil uil-envelope-alt"></i>
+                            <input type="email" name="" placeholder="Email" id="">
+                        </div>
+
+                        <div class="input-field">
+                            <i class="uil uil-padlock"></i>
+                            <input type="password" name="" placeholder="Handle" id="">
+                        </div>
+
+                    </div>
+
+                    <div class="btn-field">
+                        <button type="button">Update Profile</button>
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+
+    </div>
+    <!--------- END OF EDIT PROFILE -----------> 
+
+    <script src="{{ url_for('static', filename='js/index.js') }}"></script>
 
 </body>
 </html>

@@ -1,5 +1,5 @@
 # flaskphoto
-> An application for sharing photos with your friends.
+> An application for sharing travel photos with your friends.
 
 <p align="center">
   <img title="Bandit badge" alt="Bandit badge" src="https://github.com/twyle/Medium-Clone-Blog-Service/actions/workflows/feature-development-workflow.yml/badge.svg" />
@@ -21,7 +21,7 @@
 
 ## Application Overview
 
-This is a social application that enables an authenticated and authorized user to share images their friends. It is a responsive single page application built with python,flask, html, javascript and css.
+This is a social application that enables an authenticated and authorized user to share travel images their friends. It is a responsive single page application built with python,flask, html, javascript and css.
 
 <img src="assets/images/photo-sharing-app.png" class="img-responsive" alt="">
 

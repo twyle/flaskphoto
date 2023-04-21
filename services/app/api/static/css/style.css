@@ -303,6 +303,117 @@ main .container{
     cursor: pointer;
 }
 
+/* ============== EDIT PROFILE ============= */
+.form{
+    background: rga(255,255,255,0.5);
+    width: 80vw;
+    height: 80vh;
+    position: fixed;
+    top: 20vh;
+    left: 20vw;
+    z-index: 100;
+    text-align: center;
+    place-items: center;
+    font-size: 0.9rem;
+}
+
+.form .card{
+    background: var(--color-white);
+    padding: 2rem;
+    border-radius: var(--card-border-radius);
+    width: 60%;
+    box-shadow: 0 0 1rem var(--color-primary);
+}
+
+.form .form-box{
+    text-align: center;
+}
+
+.form-box h1{
+    font-size: 30px;
+    margin-bottom: 40px;
+    color: #3c00a0;
+    position: relative;
+}
+
+.form-box h1::after{
+    content: '';
+    width: 30px;
+    height: 4px;
+    border-radius: 3px;
+    background: #3c00a0;
+    position: absolute;
+    bottom: -12px;
+    left: 50%;
+    transform: translate(-50%);
+}
+
+.form-box .input-field{
+    background: #eaeaea;
+    margin: 15px 0;
+    border-radius: 3px;
+    display: flex;
+    align-items: center;
+}
+
+.form-box input{
+    width: 100%;
+    background: transparent;
+    border: 0;
+    outline: 0;
+    padding: 15px 15px;
+}
+
+.form-box textarea{
+    width: 100%;
+    background: transparent;
+    border: 0;
+    outline: 0;
+    padding: 15px 15px;
+}
+
+.form-box .input-field i{
+    margin-left: 15px;
+    color: #999;
+}
+
+.form-box form p{
+    text-align: center;
+    font-size: 13px;
+}
+
+form p a{
+    text-decoration: none;
+    color: #3c00a0;
+}
+
+.form-box .btn-field{
+    width: 100%;
+    /* display: flex;
+    justify-content: space-between; */
+    margin-top: 30px;
+}
+
+.form-box .btn-field button{
+    width: 50%;
+    background: #3c00a0;
+    color: #fff;
+    height: 40px;
+    border-radius: 20px;
+    border: 0;
+    outline: 0;
+    cursor: pointer;
+    transition: background 1s;
+}
+
+.create-post{
+    display: none;
+}
+
+.edit-profile{
+    display: none;
+}
+
 @media screen and (min-width: 992px){
     .container{
         width: 60%;
@@ -319,5 +430,14 @@ main .container{
         width: 22vw;
         margin-left: 0.7rem;
         font-size: 0.7rem;
+    }
+
+    .form{
+        width: 60vw;
+        height: fit-content;
+        position: fixed;
+        top: 20vh;
+        left: 30vw;
+        font-size: 0.9rem;
     }
 }
