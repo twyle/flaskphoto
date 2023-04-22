@@ -550,6 +550,14 @@ form p a{
 .post-comments .post-comments-popup small{
     display: block;
 }
+.comment-box .create-text{
+    box-shadow: 0 0 1rem var(--color-primary);
+    margin-bottom: 1rem;
+}
+
+.comment-box{
+    display: none;
+}
 
 @media screen and (min-width: 992px){
     .container{

@@ -53,3 +53,21 @@ def update_post():
     print(file)
     print(form)
     return jsonify({'success': 'updated'}), HTTP_200_OK
+
+
+@post.route("/like", methods=['GET'])
+@login_required
+def like_post():
+    """Render the home page."""
+    post_id = request.args.get('post_id')
+    print(post_id)
+    return jsonify({'success': 'liked'}), HTTP_200_OK
+
+
+@post.route("/comment", methods=['GET'])
+@login_required
+def comment_on_post():
+    """Render the home page."""
+    post_id = request.args.get('post_id')
+    print(post_id)
+    return jsonify({'success': 'commented'}), HTTP_200_OK

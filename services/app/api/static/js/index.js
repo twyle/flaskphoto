@@ -212,3 +212,60 @@ postMenuBtns.forEach(btn => {
         }, 2000)
     })
 })
+
+//LIKE
+const likeButtons = document.querySelectorAll('.like-button')
+likeButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+        const likeButtonSolid = btn.querySelector('.fa-solid')
+        const likeButtonRegular = btn.querySelector('.fa-regular')
+        likeButtonSolid.classList.toggle('active')
+        likeButtonRegular.classList.toggle('active')
+        likeButtonSolid.style.color = 'red'
+        likeButtonSolid.style.fontSize = '2rem'
+        setTimeout(() => {
+            likeButtonSolid.style.fontSize = '1.4rem'
+        }, 1000)
+
+        const postId = 2
+
+        fetch(`http://localhost:5000/post/like?post_id=${postId}`,{
+            method: 'GET'
+        }).then(
+            response => response.json()
+        ).then(
+            response => {
+                console.log(JSON.stringify(response))
+            }
+        )
+    })
+})
+
+//COMMENT
+const commentButtons = document.querySelectorAll('.fa-comment')
+commentButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+        const feed = btn.closest('.feed')
+        const comment = feed.querySelector('.comment-box')
+        comment.style.display = 'block'
+    })
+})
+
+const submitCommentButtons = document.querySelectorAll('.submit-comment')
+submitCommentButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+        const postId = 2
+
+        fetch(`http://localhost:5000/post/comment?post_id=${postId}`,{
+            method: 'GET'
+        }).then(
+            response => response.json()
+        ).then(
+            response => {
+                console.log(JSON.stringify(response))
+            }
+        )
+        comment = btn.closest('.comment-box')
+        comment.style.display = 'none'
+    })
+})
