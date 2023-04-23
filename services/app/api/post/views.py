@@ -8,7 +8,7 @@ post = Blueprint("post", __name__)
 
 
 @post.route("/", methods=['POST'])
-@login_required
+# @login_required
 def create_post():
     """Render the home page."""
     form = request.form
@@ -17,7 +17,7 @@ def create_post():
 
 
 @post.route("/", methods=['GET'])
-@login_required
+# @login_required
 def get_post():
     """Render the home page."""
     post_id = request.args.get('post_id')
@@ -35,7 +35,7 @@ def get_post():
 
 
 @post.route("/", methods=['DELETE'])
-@login_required
+# @login_required
 def delete_post():
     """Render the home page."""
     post_id = request.args.get('post_id')
@@ -44,7 +44,7 @@ def delete_post():
 
 
 @post.route("/", methods=['PUT'])
-@login_required
+# @login_required
 def update_post():
     """Render the home page."""
     post_id = request.args.get('post_id')
@@ -56,7 +56,7 @@ def update_post():
 
 
 @post.route("/like", methods=['GET'])
-@login_required
+# @login_required
 def like_post():
     """Render the home page."""
     post_id = request.args.get('post_id')
@@ -65,7 +65,7 @@ def like_post():
 
 
 @post.route("/comment", methods=['GET'])
-@login_required
+# @login_required
 def comment_on_post():
     """Render the home page."""
     post_id = request.args.get('post_id')

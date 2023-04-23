@@ -34,15 +34,15 @@
             <div class="context-menu">
                 <div class="dropdownmenu profile-ctx">
                     <div class="card">
-                        <div class="profile ctx-menu active">
+                        <div class="user-profile ctx-menu active">
                             <span>
-                                <i class="fa-regular fa-message"></i>
+                                <i class="fa fa-user-circle" aria-hidden="true"></i>
                             </span>
                             <small class="active-menu menu-item">Profile</small>
                         </div>
                         <div class="logout ctx-menu">
                             <span>
-                                <i class="fa-solid fa-rectangle-xmark"></i>
+                                <i class="fa fa-sign-out" aria-hidden="true"></i>
                             </span>
                             <a href="{{ url_for('auth.logout') }}">
                                 <small class="menu-item">Logout</small>
@@ -64,56 +64,77 @@
             <!---------------MIDDLE------------------------->
             <div class="middle">
 
-                <!------------ STORIES ------------------>
-                <div class="stories">
-
-                    <div class="story">
-                        <div class="profile-photo">
-                            <img src="{{ url_for('static', filename='img/profile-8.jpg') }}" alt="">
-                        </div>
-                        <p class="name">
-                            Your story
-                        </p>
+                <div class="story-navigation">
+                    
+                    <div class="previous">
+                        <i class="fa fa-angle-left" aria-hidden="true"></i>
                     </div>
-
-                    <div class="story">
-                        <div class="profile-photo">
-                            <img src="{{ url_for('static', filename='img/profile-9.jpg') }}" alt="">
+    
+                    <!------------ STORIES ------------------>
+                    <div class="stories">
+    
+                        <div class="story">
+                            <div class="profile-photo profile-menu">
+                                <img src="{{ url_for('static', filename='img/profile-10.jpg') }}" alt="">
+                            </div>
+                            <p class="name">
+                                Michael Owino
+                            </p>
                         </div>
-                        <p class="name">
-                            James Otieno
-                        </p>
+
+                        <div class="story">
+                            <div class="profile-photo profile-menu">
+                                <img src="{{ url_for('static', filename='img/profile-10.jpg') }}" alt="">
+                            </div>
+                            <p class="name">
+                                Michael Owino
+                            </p>
+                        </div>
+
+                        <div class="story">
+                            <div class="profile-photo profile-menu">
+                                <img src="{{ url_for('static', filename='img/profile-10.jpg') }}" alt="">
+                            </div>
+                            <p class="name">
+                                Michael Owino
+                            </p>
+                        </div>
+    
+                        <div class="story">
+                            <div class="profile-photo profile-menu">
+                                <img src="{{ url_for('static', filename='img/profile-10.jpg') }}" alt="">
+                            </div>
+                            <p class="name">
+                                Michael Owino
+                            </p>
+                        </div>
+    
+                        <div class="story">
+                            <div class="profile-photo profile-menu">
+                                <img src="{{ url_for('static', filename='img/profile-11.jpg') }}" alt="">
+                            </div>
+                            <p class="name">
+                                Jano Mureithi
+                            </p>
+                        </div>
+    
+                        <div class="story">
+                            <div class="profile-photo profile-menu">
+                                <img src="{{ url_for('static', filename='img/profile-12.jpg') }}" alt="">
+                            </div>
+                            <p class="name">
+                                Martha Koome
+                            </p>
+                        </div>
+    
                     </div>
-
-                    <div class="story">
-                        <div class="profile-photo">
-                            <img src="{{ url_for('static', filename='img/profile-10.jpg') }}" alt="">
-                        </div>
-                        <p class="name">
-                            Michael Owino
-                        </p>
-                    </div>
-
-                    <div class="story">
-                        <div class="profile-photo">
-                            <img src="{{ url_for('static', filename='img/profile-11.jpg') }}" alt="">
-                        </div>
-                        <p class="name">
-                            Jano Mureithi
-                        </p>
-                    </div>
-
-                    <div class="story">
-                        <div class="profile-photo">
-                            <img src="{{ url_for('static', filename='img/profile-12.jpg') }}" alt="">
-                        </div>
-                        <p class="name">
-                            Martha Koome
-                        </p>
+                    <!----------------- END OF STORIES ----------------------->
+    
+                    <div class="next">
+                        <i class="fa fa-angle-right" aria-hidden="true"></i>
                     </div>
 
                 </div>
-                <!----------------- END OF STORIES ----------------------->
 
                 <!------------------- FEEDS --------------------->
                 <div class="feeds">
@@ -123,8 +144,8 @@
 
                         <div class="head">
                             <div class="user">
-                                <div class="profile-photo">
-                                    <img src="{{ url_for('static', filename='img/profile-14.jpg') }}" alt="">
+                                <div class="profile-photo profile-menu">
+                                    <img class="user-profile-btn" src="{{ url_for('static', filename='img/profile-14.jpg') }}" alt="">
                                 </div>
                                 <div class="ingo">
                                     <h3 class="user-name">Dave Clark</h3>
@@ -197,7 +218,7 @@
                         <div class="comment-box">
                             <div class="create-text">
                     
-                                <div class="profile-photo">
+                                <div class="profile-photo profile-menu">
                                     <img src="{{ url_for('static', filename='img/profile-0.jpg') }}" alt="">
                                 </div>
                 
@@ -241,7 +262,7 @@
 
                         <div class="head">
                             <div class="user">
-                                <div class="profile-photo">
+                                <div class="profile-photo profile-menu">
                                     <img src="{{ url_for('static', filename='img/profile-15.jpg') }}" alt="">
                                 </div>
                                 <div class="ingo">
@@ -354,15 +375,42 @@
     <div class="create-post form">
 
         <div class="card">
-            <div class="form-box">
 
-                <h1>Create Post</h1>
+            <h2>Create Post</h2>
+
+            <div class="feed">
+                <div class="head">
+
+                    <div class="user">
+                        <div class="profile-photo profile-menu">
+                            <img class="profile-photo profile-menu-img" src="{{ url_for('static', filename='img/profile-2.jpg') }}"
+                                alt="">
+                        </div>
+                        <div class="ingo">
+                            <h3 class="edit-user-name">Lana Rose</h3>
+                            <small class="edit-user-location">Dubai, 15 MINUTES AGO</small>
+                        </div>
+                    </div>
+
+                    <span class="edit">
+                        <label class="custom-file-upload">
+                            <i class="uil uil-image-plus post-image-upload"></i>
+                        </label>
+                    </span>
+
+                </div>
+                <div class="photo">
+                    <img class="post-photo" src="{{ url_for('static', filename='img/feed-1.jpg') }}" alt="">
+                </div>
+            </div>
+
+            <div class="form-box">
 
                 <form class="create-post-form" action="{{ url_for('post.create_post') }}" method="post">
                     <div class="input-group">
 
                         <div class="input-field">
-                            <textarea name="text" placeholder="What's on your mind?" rows="5"></textarea>
+                            <textarea name="text" placeholder="What's on your mind?" rows="2"></textarea>
                         </div>
 
                         <div class="input-field">
@@ -388,9 +436,32 @@
     <div class="edit-profile form">
 
         <div class="card">
-            <div class="form-box">
+            <h1>Update Profile</h1>
 
-                <h1>Update Profile</h1>
+            <div class="feed">
+                <div class="head">
+
+                    <div class="user">
+                        <div class="profile-photo profile-menu">
+                            <img class="profile-photo profile-menu-img" src="{{ url_for('static', filename='img/profile-2.jpg') }}"
+                                alt="">
+                        </div>
+                        <div class="ingo">
+                            <h3 class="edit-user-name">Lana Rose</h3>
+                            <small class="edit-user-location">Dubai, 15 MINUTES AGO</small>
+                        </div>
+                    </div>
+
+                    <span class="edit">
+                        <label class="custom-file-upload">
+                            <i class="uil uil-image-plus post-image-upload"></i>
+                        </label>
+                    </span>
+
+                </div>
+            </div>
+
+            <div class="form-box">
 
                 <form action="">
                     <div class="input-group">
@@ -434,8 +505,8 @@
                 <div class="head">
 
                     <div class="user">
-                        <div class="profile-photo">
-                            <img class="profile-photo-img" src="{{ url_for('static', filename='img/profile-2.jpg') }}"
+                        <div class="profile-photo profile-menu">
+                            <img class="profile-photo profile-menu-img" src="{{ url_for('static', filename='img/profile-2.jpg') }}"
                                 alt="">
                         </div>
                         <div class="ingo">
@@ -458,7 +529,7 @@
 
                 <div class="create-text">
 
-                    <div class="profile-photo">
+                    <div class="profile-photo profile-menu">
                         <img class="text-photo-img" src="{{ url_for('static', filename='img/profile-0.jpg') }}" alt="">
                     </div>
 
@@ -485,7 +556,7 @@
             <!-----POST COMMENTS POPUP----------->
             <div class="post-comments-popup">
                 <div>
-                    <div class="profile-photo">
+                    <div class="profile-photo profile-menu">
                         <img src="{{ url_for('static', filename='img/profile-2.jpg') }}" alt="">
                     </div>
                     <div class="notification-body">
@@ -495,7 +566,7 @@
                 </div>
 
                 <div>
-                    <div class="profile-photo">
+                    <div class="profile-photo profile-menu">
                         <img src="./img/profile-3.jpg" alt="">
                     </div>
                     <div class="notification-body">
@@ -505,7 +576,7 @@
                 </div>
 
                 <div>
-                    <div class="profile-photo">
+                    <div class="profile-photo profile-menu">
                         <img src="./img/profile-4.jpg" alt="">
                     </div>
                     <div class="notification-body">
@@ -515,7 +586,7 @@
                 </div>
 
                 <div>
-                    <div class="profile-photo">
+                    <div class="profile-photo profile-menu">
                         <img src="./img/profile-5.jpg" alt="">
                     </div>
                     <div class="notification-body">
@@ -525,7 +596,61 @@
                 </div>
 
             </div>
-            <!-----END OF POST COMMENTS POPUP----------->
+
+        </div>
+
+    </div>
+    <!-----END OF POST COMMENTS POPUP----------->
+
+    <!-----VIEW PROFILE----------->
+    <div class="view-user-profile">
+        <div class="card">
+
+            <div class="feed">
+                <div class="head">
+
+                    <div class="user">
+                        <div class="profile-photo profile-menu">
+                            <img class="profile-photo profile-menu-img" src="{{ url_for('static', filename='img/profile-2.jpg') }}"
+                                alt="">
+                        </div>
+                        <div class="ingo">
+                            <h3 class="edit-user-name">Lana Rose</h3>
+                            <small class="edit-user-location">Dubai, 15 MINUTES AGO</small>
+                        </div>
+                    </div>
+
+                    <span class="edit">
+                        <label class="close-profile">
+                            <i class="fa fa-times" aria-hidden="true"></i>
+                        </label>
+                    </span>
+
+                </div>
+
+                <div class="post-text text-muted">
+                    Some really short, interesting post text.
+                </div>
+
+                <div class="view-posts">
+                    <div class="previous">
+                        <i class="fa fa-angle-left" aria-hidden="true"></i>
+                    </div>
+                    <div class="photo">
+                        <img class="post-photo" src="{{ url_for('static', filename='img/feed-1.jpg') }}" alt="">
+                    </div>
+                    <div class="next">
+                        <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    </div>
+                </div>
+            </div>
+
+            <button class="btn btn-primary create-post-btn">Create Story</button>
+
+        </div>
+
+    </div>
+    <!-----END OF POST COMMENT BOX----------->
 
             <script src="{{ url_for('static', filename='js/index.js') }}"></script>
 

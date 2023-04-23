@@ -178,6 +178,13 @@ main .container{
 }
 
 /* ================= MIDDLE ===================== */
+
+.story-navigation{
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
 .middle .stories{
     display: flex;
     justify-content: space-between;
@@ -200,6 +207,14 @@ main .container{
     overflow: hidden;
 }
 
+.middle .stories .story img{
+    width: 100%;
+   height: auto;
+   background-size: cover;
+   background-repeat: no-repeat;
+   background-position: center;
+}
+
 .middle .stories .story::before{
     content: "";
     display: block;
@@ -215,11 +230,11 @@ main .container{
 }
 
 .middle .stories .story:nth-child(1){
-    background: url('../img/story-1.jpg') no-repeat center center/cover;
+    background: url('../img/story-1.jpg');
 }
 
 .middle .stories .story:nth-child(2){
-    background: url('../img/story-2.jpg') no-repeat center center/cover;
+    background: url('../img/story-2.jpg');
 }
 
 .middle .stories .story:nth-child(3){
@@ -458,7 +473,21 @@ form p a{
 }
 
 .create-post{
+    top: 0;
+    left: 20vw;
     display: none;
+}
+
+.create-post .photo{
+    height: 8rem;
+}
+
+.create-post .form-box{
+    margin-top: 0.5rem;
+}
+
+.create-post .form-box .btn-field{
+    margin-bottom: 0;
 }
 
 /* ============== EDIT POST ============= */
@@ -557,6 +586,34 @@ form p a{
 
 .comment-box{
     display: none;
+}
+
+.view-user-profile{
+    background: rga(255,255,255,0.5);
+    width: 50vw;
+    height: 50vh;
+    position: fixed;
+    top: 15vh;
+    left: 20vw;
+    z-index: 100;
+    text-align: center;
+    place-items: center;
+    font-size: 0.9rem;
+    display: none;
+}
+
+.view-user-profile .card{
+    background: var(--color-white);
+    padding: 1rem;
+    border-radius: var(--card-border-radius);
+    width: 100%;
+    box-shadow: 0 0 1rem var(--color-primary);
+}
+
+.view-user-profile .view-posts{
+    display: flex;
+    align-items: center;
+    gap: 1rem;
 }
 
 @media screen and (min-width: 992px){
