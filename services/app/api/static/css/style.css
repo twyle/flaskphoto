@@ -229,9 +229,9 @@ main .container{
     z-index: 2;
 }
 
-.middle .stories .story:nth-child(1){
+/* .middle .stories .story:nth-child(1){
     background: url('../img/story-1.jpg');
-}
+} */
 
 .middle .stories .story:nth-child(2){
     background: url('../img/story-2.jpg');
@@ -615,6 +615,21 @@ form p a{
     align-items: center;
     gap: 1rem;
 }
+
+.loader {
+    border: 6px solid var(--color-white); /* Light grey */
+    border-top: 6px solid var(--color-primary); /* Blue */
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    animation: spin 1s linear infinite;
+    margin: 0 auto;
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
 
 @media screen and (min-width: 992px){
     .container{

@@ -417,3 +417,123 @@ unfriendBtns.forEach(btn => {
         )
     })
 })
+
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+        if (entry.isIntersecting){
+            entry.target.classList.add('intersecting')
+            fetch('http://localhost:5000/post?post_id=1',{
+                method: 'GET',
+            }).then(
+                response => response.json()
+            ).then(
+                response => {
+                    console.log(JSON.stringify(response))
+                    setTimeout(() => {
+                        loadMorePosts(response)
+                    }, 1000)
+                }
+            )
+        }
+    })
+},
+{
+    threshold: 0.2
+}
+)
+
+const loader = document.querySelectorAll('.loader')
+
+for(let i = 0; i < loader.length; i++){
+    const elements = loader[i];
+
+    observer.observe(elements);
+}
+
+const loadMorePosts = (response) => {
+    feed = document.createElement( 'div' );
+    feed.classList.add('feed')
+
+    head = document.createElement( 'div' );
+    head.classList.add('head')
+
+    user = document.createElement( 'div' );
+    user.classList.add('user')
+
+    profilePhoto = document.createElement( 'div' );
+    profilePhoto.classList.add('profile-photo')
+
+    profileImg = document.createElement('img');
+    profileImg.src = response['user_photo']
+
+    profilePhoto.appendChild(profileImg)
+
+    ingo = document.createElement( 'div' );
+    ingo.classList.add('ingo')
+
+    h3 = document.createElement( 'h3' );
+    h3.innerHTML = response['user_name']
+    small = document.createElement( 'small' );
+    small.innerHTML = `${response["location"]}, ${response["time"]} AGO`
+
+    ingo.appendChild(h3)
+    ingo.appendChild(small)
+
+    user.appendChild(profilePhoto)
+    user.appendChild(ingo)
+
+    span = document.createElement('span')
+    span.classList.add('edit')
+    span.innerHTML = `
+        <i class="uil uil-ellipsis-h" id="context-dropdown"></i>
+                            
+        <div class="context-menu">
+            <div class="dropdownmenu">
+                <div class="card">
+
+                </div>
+            </div>
+        </div>
+    `
+    head.appendChild(user)
+    head.appendChild(span)
+
+    postText = document.createElement('div');
+    postText.classList.add('post-text')
+    postText.classList.add('text-muted')
+    postText.innerHTML = response['post_text']
+
+    postPhoto = document.createElement( 'div' );
+    postPhoto.classList.add('photo')
+
+    postImg = document.createElement('img');
+    postImg.src = response["post_photo"]
+
+    postPhoto.appendChild(postImg)
+
+    actionButtons = document.createElement('div')
+    actionButtons.classList.add('action-buttons')
+
+    actionButtons.innerHTML = `
+    <div class="interaction-button">
+        <div class="like-button">
+            <span>
+                <i class="fa-solid fa-heart"></i>
+            </span>
+            <span>
+                <i class="fa-regular fa-heart active"></i>
+            </span>
+        </div>
+        <span>
+            <i class="fa-regular fa-comment active"></i>
+        </span>
+    </div>
+    `
+
+    feed.appendChild(head)
+    feed.appendChild(postText)
+    feed.appendChild(postPhoto)
+    feed.appendChild(actionButtons)
+
+    posts.appendChild(feed, posts.firstChild)
+}
