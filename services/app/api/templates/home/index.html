@@ -66,12 +66,46 @@
 
                 <div class="story-navigation">
                     
-                    <div class="previous">
+                    <!-- <div class="previous">
                         <i class="fa fa-angle-left" aria-hidden="true"></i>
-                    </div>
+                    </div> -->
+
+                    <!-- <div class="entries">
+
+                        <div class="entry">
+                            <div class="photo">
+                                <img src="{{ url_for('static', filename='img/feed-1.jpg') }}" alt="">
+                            </div>
+                        </div>
+
+                        <div class="entry">
+                            <div class="photo">
+                                <img src="{{ url_for('static', filename='img/feed-2.jpg') }}" alt="">
+                            </div>
+                        </div>
+
+                        <div class="entry">
+                            <div class="photo">
+                                <img src="{{ url_for('static', filename='img/feed-3.jpg') }}" alt="">
+                            </div>
+                        </div>
+
+                        <div class="entry">
+                            <div class="photo">
+                                <img src="{{ url_for('static', filename='img/feed-4.jpg') }}" alt="">
+                            </div>
+                        </div>
+
+                        <div class="entry">
+                            <div class="photo">
+                                <img src="{{ url_for('static', filename='img/feed-5.jpg') }}" alt="">
+                            </div>
+                        </div>
+
+                    </div> -->
     
                     <!------------ STORIES ------------------>
-                    <div class="stories">
+                    <!-- <div class="stories">
     
                         <div class="story">
                             <div class="profile-photo profile-menu">
@@ -127,12 +161,12 @@
                             </p>
                         </div>
     
-                    </div>
+                    </div> -->
                     <!----------------- END OF STORIES ----------------------->
     
-                    <div class="next">
+                    <!-- <div class="next">
                         <i class="fa fa-angle-right" aria-hidden="true"></i>
-                    </div>
+                    </div> -->
 
                 </div>
 
@@ -387,24 +421,24 @@
 
                     <div class="user">
                         <div class="profile-photo profile-menu">
-                            <img class="profile-photo profile-menu-img" src="{{ url_for('static', filename='img/profile-2.jpg') }}"
+                            <img class="profile-photo profile-menu-img" src="{{ url_for('static', filename='img/default.jpeg') }}"
                                 alt="">
                         </div>
                         <div class="ingo">
                             <h3 class="edit-user-name">Lana Rose</h3>
-                            <small class="edit-user-location">Dubai, 15 MINUTES AGO</small>
+                            <!-- <small class="edit-user-location">Dubai, 15 MINUTES AGO</small> -->
                         </div>
                     </div>
 
                     <span class="edit">
                         <label class="custom-file-upload">
-                            <i class="uil uil-image-plus post-image-upload"></i>
+                            <i class="uil uil-image-plus new-post-image"></i>
                         </label>
                     </span>
 
                 </div>
-                <div class="photo">
-                    <img class="post-photo" src="{{ url_for('static', filename='img/feed-1.jpg') }}" alt="">
+                <div class="photo-holder">
+                    <img class="post-photo" src="" alt="">
                 </div>
             </div>
 

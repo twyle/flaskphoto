@@ -3,6 +3,7 @@ from flask import Blueprint, render_template, request, jsonify, url_for
 from flask_login import current_user, login_required
 
 from ..utils.http_status_codes import HTTP_200_OK, HTTP_201_CREATED
+from .controller.post import handle_create_post
 
 post = Blueprint("post", __name__)
 
@@ -11,9 +12,7 @@ post = Blueprint("post", __name__)
 # @login_required
 def create_post():
     """Render the home page."""
-    form = request.form
-    print(form)
-    return jsonify({'success': 'created'}), HTTP_201_CREATED
+    return handle_create_post(request.form, request.files)
 
 
 @post.route("/", methods=['GET'])

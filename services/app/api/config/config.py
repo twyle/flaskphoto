@@ -26,7 +26,8 @@ class BaseConfig:
     POSTGRES_PORT = os.environ["POSTGRES_PORT"]
     POSTGRES_USER = os.environ["POSTGRES_USER"]
     POSTGRES_PASSWORD = os.environ["POSTGRES_PASSWORD"]
-    db_conn_string = f"postgresql://{POSTGRES_USER}:{POSTGRES_PASSWORD}@{POSTGRES_HOST}:{POSTGRES_PORT}/{POSTGRES_DB}"
+    # db_conn_string = f"postgresql://{POSTGRES_USER}:{POSTGRES_PASSWORD}@{POSTGRES_HOST}:{POSTGRES_PORT}/{POSTGRES_DB}"
+    db_conn_string = SQLALCHEMY_DATABASE_URI = os.environ.get("SQLALCHEMY_DATABASE_URI", 'sqlite:///./oryks.db')
     SQLALCHEMY_DATABASE_URI = db_conn_string
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     MAIL_USERNAME = os.environ["MAIL_USERNAME"]

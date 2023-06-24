@@ -4,7 +4,7 @@ Has the following methods:
 handle_create_user:
 create_user:
 """
-from flask import flash, redirect, render_template, request, url_for
+from flask import flash, redirect, render_template, request, url_for, session
 from flask_login import login_user
 
 from ...extensions.extensions import bcrypt, db
@@ -122,6 +122,7 @@ def handle_login_user(user_credentials: dict):
     #     )
     if user and bcrypt.check_password_hash(user.password, user_credentials["password"]):
         login_user(user)
+        session['user_id'] = user.id
         next_page = request.args.get("next")
         return redirect(next_page) if next_page else redirect(url_for("home.home_page"))
     return render_template(

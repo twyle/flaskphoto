@@ -38,7 +38,7 @@ likeButtons.forEach(btn => {
         }, 1000)
 
         const postId = 2
-
+ 
         fetch(`http://localhost:5000/post/like?post_id=${postId}`,{
             method: 'GET'
         }).then(
@@ -96,6 +96,27 @@ submitCommentButtons.forEach(btn => {
 
 
 //CREATE POST
+const newPostImageUpload = document.querySelector('.new-post-image')
+newPostImageUpload.addEventListener('click', () => {
+    const photoHolder = createPostFormDiv.querySelector('.photo-holder')
+    const input = document.createElement('input');
+    input.type = 'file';
+
+    input.onchange = event => { 
+        const imageFiles = event.target.files
+        const imageFilesLength = imageFiles.length
+        if (imageFilesLength > 0){
+            image = imageFiles[0]
+            const imageSrc = URL.createObjectURL(imageFiles[0])
+            photoHolder.classList.add('photo')
+            const postPhoto = createPostFormDiv.querySelector('.post-photo')
+            postPhoto.src = imageSrc
+        }
+     }
+
+    input.click();
+})
+
 createPostBtn.addEventListener('click', () => {
     createPostFormDiv.style.display = 'grid';
 })
@@ -110,6 +131,7 @@ createPostForm.addEventListener('submit', (e) => {
     e.preventDefault()
 
     const formData = new FormData(createPostForm)
+    formData.append('file', image)
     fetch(createPostForm.action,{
         method: 'POST',
         body: formData
@@ -118,7 +140,7 @@ createPostForm.addEventListener('submit', (e) => {
     ).then(
         response => {
             console.log(JSON.stringify(response))
-            createNewPost(createPostForm)
+            // createNewPost(createPostForm)
         }
     )
 

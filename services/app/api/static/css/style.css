@@ -185,6 +185,45 @@ main .container{
     gap: 1rem;
 }
 
+.entries{
+    display: flex;
+    justify-content: space-between;
+    height: 6rem;
+    gap: 0.5rem;
+}
+
+.entries .entry{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    color: white;
+    font-size: 0.75rem;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+}
+
+.entries .photo{
+    border-radius: var(--card-border-radius);
+    overflow: hidden;
+    width: 100%;
+}
+
+.entries .photo img{
+    aspect-ratio: 4/3;
+    /* background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center; */
+}
+
+.middle .entries .entry .profile-photo{
+    width: 2rem;
+    height: 2rem;
+    align-self: start;
+    border: 3px solid var(--color-primary);
+}
+
 .middle .stories{
     display: flex;
     justify-content: space-between;

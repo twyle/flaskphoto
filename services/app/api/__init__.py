@@ -24,11 +24,11 @@ def create_app() -> Flask:
 
     set_configuration(app)
 
-    try:
-        check_configuration()
-    except DatabaseNotConnectedException as e:
-        print(str(e))
-        sys.exit(1)
+    # try:
+    #     check_configuration()
+    # except DatabaseNotConnectedException as e:
+    #     print(str(e))
+    #     sys.exit(1)
 
     register_extensions(app)
     register_blueprints(app=app)
