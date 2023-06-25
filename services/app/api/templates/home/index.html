@@ -151,7 +151,7 @@
                                     </div>
                     
                                     <div class="create">
-                                        <input type="text" name="" id="create-post" placeholder="Comment on Lyle's post.">
+                                        <input type="text" name="" placeholder="Comment on Lyle's post.">
                                     </div>
                                     
                                     <input type="submit" value="Comment" class="btn btn-primary submit-comment">
@@ -159,16 +159,16 @@
                             </div>
 
                             <div class="liked-by">
-                                <span>
-                                    <img src="{{ url_for('static', filename='img/profile-10.jpg') }}" alt="">
-                                </span>
-                                <span>
-                                    <img src="{{ url_for('static', filename='img/profile-11.jpg') }}" alt="">
-                                </span>
-                                <span>
-                                    <img src="{{ url_for('static', filename='img/profile-12.jpg') }}" alt="">
-                                </span>
-                                <p>Liked by <b>Lyle Okoth</b> and 10 others<b></b> </p>
+                                {% for img in post.liked_by %}
+                                    <span>
+                                        <img src="{{ img }}" alt="">
+                                    </span>
+                                {% endfor %}
+
+                                {% if post.likes_count %}
+                                    <p>Liked by <b>{{ post.influencer }}</b> and {{ post.likes_count }} others<b></b> </p>
+                                {% endif %}
+                                
                             </div>
 
                             <div class="caption">
@@ -327,13 +327,13 @@
 
         <div class="card">
 
-            <div class="feed" id="11111">
+            <div class="feed">
 
                 <div class="head">
 
                     <div class="user">
                         <div class="profile-photo profile-menu">
-                            <img class="profile-photo profile-menu-img" src="{{ url_for('static', filename='img/profile-2.jpg') }}"
+                            <img class="profile-photo profile-menu-img" src=""
                                 alt="">
                         </div>
                         <div class="ingo">
@@ -344,20 +344,20 @@
 
                     <span class="edit">
                         <label class="custom-file-upload">
-                            <i class="uil uil-image-plus post-image-upload"></i>
+                            <i class="uil uil-image-plus post-image-update"></i>
                         </label>
                     </span>
 
                 </div>
 
                 <div class="photo">
-                    <img class="post-photo" src="{{ url_for('static', filename='img/feed-1.jpg') }}" alt="">
+                    <img class="post-photo" src="" alt="">
                 </div>
 
                 <div class="create-text">
 
                     <div class="profile-photo profile-menu">
-                        <img class="text-photo-img" src="{{ url_for('static', filename='img/profile-0.jpg') }}" alt="">
+                        <img class="text-photo-img" src="" alt="">
                     </div>
 
                     <div class="create">

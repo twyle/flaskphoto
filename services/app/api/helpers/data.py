@@ -1,5 +1,6 @@
 from ..auth.models.user import User
 from ..post.models.post_model import Post
+from ..post.models.like_model import Like
 from faker import Faker
 from datetime import datetime, timedelta
 fake = Faker()
@@ -39,6 +40,13 @@ def generate_posts(authors: list[User], count: int = 100) -> list[Post]:
         for text, d in zip(posts_text, dates_published)
     ]
     
+def generate_likes(users: list[User], posts: list[Post], likes_count: int = 100) -> list[Like]:
+    """Generate likes."""
+    return [
+        Like(user=random.choice(users), post=random.choice(posts))
+        for _ in range(likes_count)
+    ]
+    
 def save_to_database(items: list[User | Post]) -> None:
     """Save many items to database."""
     db.session.add_all(items)
@@ -48,6 +56,8 @@ def create_data() -> None:
     """Create data for the database."""
     users = generate_users()
     save_to_database(users)
-    posts = generate_posts(count=10, authors=users)
+    posts = generate_posts(count=20, authors=users)
     save_to_database(posts)
+    likes = generate_likes(users=users, posts=posts, likes_count=100)
+    save_to_database(likes)
      

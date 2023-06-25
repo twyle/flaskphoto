@@ -5,6 +5,7 @@ from ..post.models.post_model import Post
 from datetime import datetime
 
 from ..utils.http_status_codes import HTTP_200_OK
+from .controller.home import handle_load_posts
 
 home = Blueprint("home", __name__)
 
@@ -15,20 +16,7 @@ home = Blueprint("home", __name__)
 @login_required
 def home_page():
     """Render the home page."""
-    posts_raw = Post.query.all()
-    posts = [
-            {
-                'id': post.id,
-                'author_image': url_for('static', filename=f'img/{post.author.image_file}'),
-                'author_name': post.author.username,
-                'location': post.location,
-                'publish_time': int((post.date_published - datetime.now()).total_seconds() / 60),
-                'text': post.text,
-                'photo': url_for('static', filename=f'img/{post.image}')
-        }
-            for post in posts_raw
-    ]
-    return render_template("home/index.html", posts=posts), HTTP_200_OK
+    return handle_load_posts()
 
 @home.route("/friend_action")
 def friend_action():

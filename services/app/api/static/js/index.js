@@ -7,7 +7,7 @@ const posts = document.querySelector('.feeds')
 //EDIT 
 const editPostBtn = document.querySelector('.submit-edited-post')
 const editPostDiv = document.querySelector('.edit-post')
-const updatePostImage = document.querySelector('.post-image-upload')
+const updatePostImage = document.querySelector('.post-image-update')
 let image;
 let oldPost;
 
@@ -24,11 +24,11 @@ const userProfileBtn = document.querySelector('.user-profile')
 const editProfileDiv = document.querySelector('.edit-profile')
 
 //LIKE
-const likeButtons = document.querySelectorAll('.like-button')
-likeButtons.forEach(btn => {
-    btn.addEventListener('click', () => {
-        const likeButtonSolid = btn.querySelector('.fa-solid')
-        const likeButtonRegular = btn.querySelector('.fa-regular')
+document.addEventListener('click', (e) => {
+    if(e.target.classList.contains('fa-heart')){
+        const likeButtons = e.target.closest('.like-button')
+        const likeButtonSolid = likeButtons.querySelector('.fa-solid')
+        const likeButtonRegular = likeButtons.querySelector('.fa-regular')
         likeButtonSolid.classList.toggle('active')
         likeButtonRegular.classList.toggle('active')
         likeButtonSolid.style.color = 'red'
@@ -36,9 +36,8 @@ likeButtons.forEach(btn => {
         setTimeout(() => {
             likeButtonSolid.style.fontSize = '1.4rem'
         }, 1000)
-
-        const postId = 2
- 
+        const post = e.target.closest('.feed')
+        const postId = post.id
         fetch(`http://localhost:5000/post/like?post_id=${postId}`,{
             method: 'GET'
         }).then(
@@ -48,7 +47,7 @@ likeButtons.forEach(btn => {
                 console.log(JSON.stringify(response))
             }
         )
-    })
+    }
 })
 
 //COMMENT
@@ -272,7 +271,8 @@ document.addEventListener('click', (e) => {
         oldPost = e.target.closest('.feed')
         const postId = oldPost.id
         editPostDiv.id = postId
-        const profilePhoto = editPostDiv.querySelector('.profile-photo')
+        const profilePhoto = editPostDiv.querySelector('.profile-menu-img')
+        console.log(profilePhoto)
         const userName = editPostDiv.querySelector('h3')
         const locationTime = editPostDiv.querySelector('small')
         const postPhoto = editPostDiv.querySelector('.post-photo')
@@ -285,11 +285,11 @@ document.addEventListener('click', (e) => {
         ).then(
             response => {
                 console.log(JSON.stringify(response))
-                profilePhoto.src = response['user_photo']
-                userName.textContent = response['user_name']
-                locationTime.textContent = `${response['location']}, ${response['time']} AGO`
-                postPhoto.src = response['post_photo']
-                textPhoto.src = response['user_photo']
+                profilePhoto.src = response['author_image']
+                userName.textContent = response['author_name']
+                locationTime.textContent = `${response['location']}, ${response['publish_time']} Minutes AGO`
+                postPhoto.src = response['photo']
+                textPhoto.src = response['author_image']
             }
         )
         editPostDiv.style.display = 'grid'
@@ -313,7 +313,7 @@ updatePostImage.addEventListener('click', () => {
         if (imageFilesLength > 0){
             image = imageFiles[0]
             const imageSrc = URL.createObjectURL(imageFiles[0])
-            console.log(imageSrc)
+            console.log(postPhoto)
             postPhoto.src = imageSrc
         }
      }
@@ -340,26 +340,29 @@ editPostBtn.addEventListener('click', (e) => {
     ).then(
         response => {
             console.log(JSON.stringify(response))
+
+            const oldText = oldPost.querySelector('.post-text')
+            const oldImageDiv = oldPost.querySelector('.photo')
+            const oldImage = oldImageDiv.querySelector('img')
+            console.log(postId)
+
+            fetch(`http://localhost:5000/post?post_id=${postId}`,{
+                method: 'GET'
+                }).then(
+                    response => response.json()
+                ).then(
+                    response => {
+                        console.log(JSON.stringify(response))
+                        oldImage.src = response['photo']
+                        oldText.textContent = response['text']
+                    }
+                )
+
+            editPostDiv.style.display = 'none'
+
         }
     )
 
-    const oldText = oldPost.querySelector('.post-text')
-    const oldImageDiv = oldPost.querySelector('.photo')
-    const oldImage = oldImageDiv.querySelector('img')
-
-    fetch(`http://localhost:5000/post?post_id=${postId}`,{
-            method: 'GET'
-        }).then(
-            response => response.json()
-        ).then(
-            response => {
-                console.log(JSON.stringify(response))
-                oldImage.src = response['post_photo']
-                oldText.textContent = response['post_text']
-            }
-        )
-
-    editPostDiv.style.display = 'none'
 })
 
 

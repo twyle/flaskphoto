@@ -3,7 +3,10 @@ from flask import Blueprint, render_template, request, jsonify, url_for
 from flask_login import current_user, login_required
 
 from ..utils.http_status_codes import HTTP_200_OK, HTTP_201_CREATED
-from .controller.post import handle_create_post, handle_load_posts
+from .controller.post import (
+    handle_create_post, handle_load_posts, handle_get_post, handle_update_post,
+    handle_delete_post
+)
 
 post = Blueprint("post", __name__)
 
@@ -20,38 +23,21 @@ def create_post():
 def get_post():
     """Render the home page."""
     post_id = request.args.get('post_id')
-    print(post_id)
-    post = {
-        'post_id': post_id,
-        'user_photo': url_for('static', filename='img/profile-1.jpg'),
-        'user_name': 'Lyle Okoth',
-        'location': 'Nairobi',
-        'time': '10 MINUTES',
-        'post_text': 'New Post text from database.',
-        'post_photo': url_for('static', filename='img/feed-7.jpg')
-    }
-    return jsonify(post), HTTP_200_OK
+    return handle_get_post(post_id)
 
 
 @post.route("/", methods=['DELETE'])
 # @login_required
 def delete_post():
     """Render the home page."""
-    post_id = request.args.get('post_id')
-    print(post_id)
-    return jsonify({'success': 'deleted'}), HTTP_200_OK
-
+    return handle_delete_post(request.args.get('post_id'))
+    
 
 @post.route("/", methods=['PUT'])
 # @login_required
 def update_post():
     """Render the home page."""
-    post_id = request.args.get('post_id')
-    file = request.files
-    form = request.form
-    print(file)
-    print(form)
-    return jsonify({'success': 'updated'}), HTTP_200_OK
+    return handle_update_post(request.args.get('post_id'), request.form, request.files)
 
 
 @post.route("/like", methods=['GET'])
