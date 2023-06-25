@@ -67,124 +67,229 @@
                 <!------------------- FEEDS --------------------->
                 <div class="feeds">
 
-                    {% for post in posts %}
+                    <!---------------FEED 2------------------------>
+                    <div class="feed" id="2">
 
-                        <div class="feed" id="{{ post.id }}">
-
-                            <div class="head">
-                                <div class="user">
-                                    <div class="profile-photo profile-menu">
-                                        <img class="user-profile-btn" src="{{ post.author_image }}" alt="">
-                                    </div>
-                                    <div class="ingo">
-                                        <h3 class="user-name">{{ post.author_name }}</h3>
-                                        <small class="post-id">{{ post.location}}, {{post.publish_time}} MINUTES AGO</small>
-                                    </div>
+                        <div class="head">
+                            <div class="user">
+                                <div class="profile-photo profile-menu">
+                                    <img class="user-profile-btn" src="{{ url_for('static', filename='img/profile-14.jpg') }}" alt="">
                                 </div>
+                                <div class="ingo">
+                                    <h3 class="user-name">Dave Clark</h3>
+                                    <small class="post-id">Dubai, 15 MINUTES AGO</small>
+                                </div>
+                            </div>
 
-                                <span class="edit">
-                                    <i class="uil uil-ellipsis-h post-menu-btn"></i>
+                            <span class="edit">
+                                <i class="uil uil-ellipsis-h post-menu-btn"></i>
 
-                                    <div class="post-menu">
-                                        <div class="dropdownmenu">
-                                            <div class="card">
-                                                <div class="befriend ctx-menu">
-                                                    <span>
-                                                        <i class="fa-solid fa-user-plus"></i>
-                                                    </span>
-                                                    <small class="menu-item">Befriend</small>
-                                                </div>
-                                                <div class="unfriend ctx-menu">
-                                                    <span>
-                                                        <i class="fa-solid fa-user-minus" ></i>
-                                                    </span>
-                                                    <small class="menu-item">Unfriend</small>
-                                                </div>
+                                <div class="post-menu">
+                                    <div class="dropdownmenu">
+                                        <div class="card">
+                                            <div class="befriend ctx-menu">
+                                                <span>
+                                                    <i class="fa-solid fa-user-plus"></i>
+                                                </span>
+                                                <small class="menu-item">Befriend</small>
+                                            </div>
+                                            <div class="unfriend ctx-menu">
+                                                <span>
+                                                    <i class="fa-solid fa-user-minus" ></i>
+                                                </span>
+                                                <small class="menu-item">Unfriend</small>
                                             </div>
                                         </div>
                                     </div>
-
-                                </span>
-
-                            </div>
-
-                            <div class="post-text text-muted">
-                                {{ post.text }}
-                            </div>
-
-                            <div class="photo">
-                                <img src="{{ post.photo }}" alt="">
-                            </div>
-
-                            <div class="action-buttons">
-
-                                <div class="interaction-button">
-                                    <div class="like-button">
-                                        <span>
-                                            <i class="fa-solid fa-heart"></i>
-                                        </span>
-                                        <span>
-                                            <i class="fa-regular fa-heart active"></i>
-                                        </span>
-                                    </div>
-                                    <span>
-                                        <i class="fa-regular fa-comment active"></i>
-                                    </span>
                                 </div>
 
-                                <div class="bookmark">
+                            </span>
+
+                        </div>
+
+                        <div class="post-text text-muted">
+                            Some really short, interesting post text. Some
+                            really short, interesting post text.
+                        </div>
+
+                        <div class="photo">
+                            <img src="{{ url_for('static', filename='img/feed-2.jpg') }}" alt="">
+                        </div>
+
+                        <div class="action-buttons">
+
+                            <div class="interaction-button">
+                                <div class="like-button">
                                     <span>
-                                        <i class="fa-regular fa-pen-to-square active"></i>
+                                        <i class="fa-solid fa-heart"></i>
                                     </span>
                                     <span>
-                                        <i class="fa-regular fa-trash-can active"></i>
+                                        <i class="fa-regular fa-heart active"></i>
                                     </span>
                                 </div>
-
-                            </div>
-
-                            <div class="comment-box">
-                                <div class="create-text">
-                        
-                                    <div class="profile-photo profile-menu">
-                                        <img src="{{ url_for('static', filename='img/profile-0.jpg') }}" alt="">
-                                    </div>
-                    
-                                    <div class="create">
-                                        <input type="text" name="" id="create-post" placeholder="Comment on Lyle's post.">
-                                    </div>
-                                    
-                                    <input type="submit" value="Comment" class="btn btn-primary submit-comment">
-                                </div>
-                            </div>
-
-                            <div class="liked-by">
                                 <span>
-                                    <img src="{{ url_for('static', filename='img/profile-10.jpg') }}" alt="">
+                                    <i class="fa-regular fa-comment active"></i>
+                                </span>
+                            </div>
+
+                            <div class="bookmark">
+                                <span>
+                                    <i class="fa-regular fa-pen-to-square active"></i>
                                 </span>
                                 <span>
-                                    <img src="{{ url_for('static', filename='img/profile-11.jpg') }}" alt="">
+                                    <i class="fa-regular fa-trash-can active"></i>
                                 </span>
-                                <span>
-                                    <img src="{{ url_for('static', filename='img/profile-12.jpg') }}" alt="">
-                                </span>
-                                <p>Liked by <b>Lyle Okoth</b> and 10 others<b></b> </p>
-                            </div>
-
-                            <div class="caption">
-                                <p>
-                                    <b>Lyle Okoth</b> some sample caption
-                                    <span class="hashtag">#lifestyle</span>
-                                </p>
-                            </div>
-
-                            <div class="comments text-muted">
-                                View all 25 comments
                             </div>
 
                         </div>
-                        
-                    {% endfor %}
+
+                        <div class="comment-box">
+                            <div class="create-text">
+                    
+                                <div class="profile-photo profile-menu">
+                                    <img src="{{ url_for('static', filename='img/profile-0.jpg') }}" alt="">
+                                </div>
+                
+                                <div class="create">
+                                    <input type="text" name="" id="create-post" placeholder="Comment on Lyle's post.">
+                                </div>
+                                
+                                <input type="submit" value="Comment" class="btn btn-primary submit-comment">
+                            </div>
+                        </div>
+
+                        <div class="liked-by">
+                            <span>
+                                <img src="{{ url_for('static', filename='img/profile-10.jpg') }}" alt="">
+                            </span>
+                            <span>
+                                <img src="{{ url_for('static', filename='img/profile-11.jpg') }}" alt="">
+                            </span>
+                            <span>
+                                <img src="{{ url_for('static', filename='img/profile-12.jpg') }}" alt="">
+                            </span>
+                            <p>Liked by <b>Lyle Okoth</b> and 10 others<b></b> </p>
+                        </div>
+
+                        <div class="caption">
+                            <p>
+                                <b>Lyle Okoth</b> some sample caption
+                                <span class="hashtag">#lifestyle</span>
+                            </p>
+                        </div>
+
+                        <div class="comments text-muted">
+                            View all 25 comments
+                        </div>
+
+                    </div>
+                    <!---------------END OF FEED 2------------------------>
+
+                    <!---------------FEED 3------------------------>
+                    <div class="feed" id="3">
+
+                        <div class="head">
+                            <div class="user">
+                                <div class="profile-photo profile-menu">
+                                    <img src="{{ url_for('static', filename='img/profile-15.jpg') }}" alt="">
+                                </div>
+                                <div class="ingo">
+                                    <h3 class="user-name">Michael Scott</h3>
+                                    <p class="location">
+                                        <small>Abidjan, 50 MINUTES AGO</small>
+                                    </p>
+                                </div>
+                            </div>
+
+                            <span class="edit">
+                                <i class="uil uil-ellipsis-h post-menu-btn"></i>
+
+                                <div class="post-menu">
+                                    <div class="dropdownmenu">
+                                        <div class="card">
+                                            <div class="befriend ctx-menu">
+                                                <span>
+                                                    <i class="fa-solid fa-user-plus"></i>
+                                                </span>
+                                                <small class="menu-item">Befriend</small>
+                                            </div>
+                                            <div class="unfriend ctx-menu">
+                                                <span>
+                                                    <i class="fa-solid fa-user-minus" ></i>
+                                                </span>
+                                                <small class="menu-item">Unfriend</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </span>
+
+                        </div>
+
+                        <div class="post-text text-muted">
+                            Some really short, interesting post text. Some
+                            really short, interesting post text.
+                        </div>
+
+                        <div class="photo">
+                            <img src="{{ url_for('static', filename='img/feed-3.jpg') }}" alt="">
+                        </div>
+
+                        <div class="action-buttons">
+
+                            <div class="interaction-button">
+                                <div class="like-button">
+                                    <span>
+                                        <i class="fa-solid fa-heart"></i>
+                                    </span>
+                                    <span>
+                                        <i class="fa-regular fa-heart active"></i>
+                                    </span>
+                                </div>
+                                <span>
+                                    <i class="fa-regular fa-comment active"></i>
+                                </span>
+                            </div>
+
+                            <div class="bookmark">
+                                <span>
+                                    <i class="fa-regular fa-pen-to-square active"></i>
+                                </span>
+                                <span>
+                                    <i class="fa-regular fa-trash-can active"></i>
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                        <div class="liked-by">
+                            <span>
+                                <img src="{{ url_for('static', filename='img/profile-10.jpg') }}" alt="">
+                            </span>
+                            <span>
+                                <img src="{{ url_for('static', filename='img/profile-11.jpg') }}" alt="">
+                            </span>
+                            <span>
+                                <img src="{{ url_for('static', filename='img/profile-12.jpg') }}" alt="">
+                            </span>
+                            <p>Liked by <b>Lyle Okoth</b> and 10 others<b></b> </p>
+                        </div>
+
+                        <div class="caption">
+                            <p>
+                                <b>Lyle Okoth</b> some sample caption
+                                <span class="hashtag">#lifestyle</span>
+                            </p>
+                        </div>
+
+                        <div class="comments text-muted">
+                            View all 25 comments
+                        </div>
+
+                    </div>
+                    <!---------------END OF FEED 3------------------------>
 
                 </div>
 

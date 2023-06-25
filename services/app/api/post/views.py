@@ -3,7 +3,7 @@ from flask import Blueprint, render_template, request, jsonify, url_for
 from flask_login import current_user, login_required
 
 from ..utils.http_status_codes import HTTP_200_OK, HTTP_201_CREATED
-from .controller.post import handle_create_post
+from .controller.post import handle_create_post, handle_load_posts
 
 post = Blueprint("post", __name__)
 
@@ -70,3 +70,10 @@ def comment_on_post():
     post_id = request.args.get('post_id')
     print(post_id)
     return jsonify({'success': 'commented'}), HTTP_200_OK
+
+
+@post.route("/load_posts", methods=['GET'])
+def load_posts():
+    """Load posts."""
+    return handle_load_posts(request.args)
+    

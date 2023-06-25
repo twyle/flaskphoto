@@ -1,5 +1,5 @@
 from flask.cli import FlaskGroup
-
+from api.helpers.data import create_data
 from api import create_app, db
 
 app = create_app()
@@ -12,6 +12,11 @@ def create_db():
     db.drop_all()
     db.create_all()
     db.session.commit()
+    
+@cli.command("seed_db")
+def seed_db():
+    """Create the initial data."""
+    create_data()
 
 
 if __name__ == "__main__":
