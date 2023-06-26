@@ -51,15 +51,53 @@ document.addEventListener('click', (e) => {
 })
 
 //COMMENT
-const commentButtons = document.querySelectorAll('.fa-comment')
-const submitCommentButtons = document.querySelectorAll('.submit-comment')
-commentButtons.forEach(btn => {
-    btn.addEventListener('click', () => {
-        const feed = btn.closest('.feed')
+document.addEventListener('click', (e) => {
+    if(e.target.classList.contains('fa-comment')){
+        const feed = e.target.closest('.feed')
         const comment = feed.querySelector('.comment-box')
+        console.log(feed)
         comment.style.display = 'block'
-    })
+    }
 })
+
+document.addEventListener('submit', (e) => {
+    if(e.target.classList.contains('comment-form')){
+        e.preventDefault()
+        
+        const formData = new FormData(e.target)
+        fetch(e.target.action,{
+            method: 'POST',
+            body: formData
+        }).then(
+            response => response.json()
+        ).then(
+            response => {
+                console.log(JSON.stringify(response))
+            }
+        )
+
+        e.target.style.display = 'none'
+        }
+})
+
+// const commentForm = document.querySelector('.comment-form')
+// commentForm.addEventListener('submit', (e) => {
+//     e.preventDefault()
+
+//     const formData = new FormData(commentForm)
+//     fetch(commentForm.action,{
+//         method: 'POST',
+//         body: formData
+//     }).then(
+//         response => response.json()
+//     ).then(
+//         response => {
+//             console.log(JSON.stringify(response))
+//         }
+//     )
+
+//     commentForm.style.display = 'none'
+// })
 
 //PROFILE
 const profileBtns =  document.querySelectorAll('.profile-menu')
@@ -73,24 +111,6 @@ profileBtns.forEach(btn => {
 
 closeProfile.addEventListener('click', () => {
     viewProfile.style.display = 'none'
-})
-
-submitCommentButtons.forEach(btn => {
-    btn.addEventListener('click', () => {
-        const postId = 2
-
-        fetch(`http://localhost:5000/post/comment?post_id=${postId}`,{
-            method: 'GET'
-        }).then(
-            response => response.json()
-        ).then(
-            response => {
-                console.log(JSON.stringify(response))
-            }
-        )
-        comment = btn.closest('.comment-box')
-        comment.style.display = 'none'
-    })
 })
 
 
@@ -122,6 +142,21 @@ createPostBtn.addEventListener('click', () => {
 
 createPostFormDiv.addEventListener('click', (e) => {
     if(e.target.classList.contains('create-post')){
+        createPostFormDiv.style.display = 'none'
+        const formData = new FormData(createPostForm)
+        formData.append('file', image)
+        fetch(createPostForm.action,{
+            method: 'POST',
+            body: formData
+        }).then(
+            response => response.json()
+        ).then(
+            response => {
+                console.log(JSON.stringify(response))
+                // createNewPost(createPostForm)
+            }
+        )
+    
         createPostFormDiv.style.display = 'none'
     }
 })
@@ -365,19 +400,6 @@ editPostBtn.addEventListener('click', (e) => {
 
 })
 
-
-postCommentBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-        postComments.style.display = 'block'
-    })
-})
-
-postComments.addEventListener('click', (e) => {
-    if(e.target.classList.contains('post-comments')){
-        postComments.style.display = 'none'
-    }
-})
-
 //PROFILE DROPDOWN
 profileDropdwon.addEventListener('click', () => {
     profileCtxMenu.style.display = 'block'
@@ -483,6 +505,7 @@ const loadMorePosts = (new_posts) => {
     new_posts.forEach(post => {
         feed = document.createElement( 'div' );
         feed.classList.add('feed')
+        feed.id = post['id']
 
         head = document.createElement( 'div' );
         head.classList.add('head')
@@ -569,10 +592,84 @@ const loadMorePosts = (new_posts) => {
         </div>
         `
 
+        form = document.createElement('form')
+        form.classList.add('comment-box')
+        form.classList.add('comment-form')
+        form.method = 'post'
+        form.action = `http://localhost:5000/post/comment?post_id=${ post.id }&user_id=${ post.user_id }`
+        
+        createText = document.createElement('div')
+        createText.classList.add('create-text')
+
+        commentProfile = document.createElement('div')
+        commentProfile.classList.add('profile-photo')
+        commentProfile.classList.add('profile-menu')
+        commentProfile.id = post['user_id']
+        
+        commentProfileImg = document.createElement('img')
+        commentProfileImg.src = post['author_image']
+
+        commentProfile.appendChild(commentProfileImg)
+
+        create = document.createElement('div')
+        create.classList.add('create')
+
+        commentTextBox = document.createElement('input')
+        commentTextBox.type = 'text'
+        commentTextBox.name = 'comment-text'
+        commentTextBox.placeholder = 'Comment on Post..'
+
+        create.appendChild(commentTextBox)
+
+        submitButton = document.createElement('input')
+        submitButton.type = 'submit'
+        submitButton.classList.add('btn')
+        submitButton.classList.add('btn-primary')
+        submitButton.classList.add('submit-comment')
+
+        createText.appendChild(commentProfile)
+        createText.appendChild(create)
+        createText.appendChild(submitButton)
+
+        form.appendChild(createText)
+
+        liked_by = document.createElement('div')
+        liked_by.classList.add('liked-by')
+
+        post['liked_by'].forEach(img_src => {
+            imgSpan = document.createElement('span')
+            img = document.createElement('img')
+            img.src = img_src
+            imgSpan.appendChild(img)
+            liked_by.appendChild(imgSpan)
+        })
+
+        top_like = document.createElement('p')
+        top_like.innerHTML = `Liked by <b>${ post['influencer'] }</b> and ${ post['likes_count'] } others`
+
+        liked_by.appendChild(top_like)
+
+        caption = document.createElement('div')
+        caption.classList.add('caption')
+
+        captionParagraph = document.createElement('p')
+        captionParagraph.innerHTML = `<b>${ post.comment['author'] }</b> ${ post['comment']['text'] }`
+
+        caption.appendChild(captionParagraph)
+
+        viewComments = document.createElement('div')
+        viewComments.classList.add('comments')
+        viewComments.classList.add('text-muted')
+        viewComments.innerHTML = `View all ${ post.comments_count } comments`
+
         feed.appendChild(head)
         feed.appendChild(postText)
         feed.appendChild(postPhoto)
         feed.appendChild(actionButtons)
+        feed.appendChild(form)
+        feed.appendChild(liked_by)
+        feed.appendChild(caption)
+        feed.appendChild(viewComments)
 
         posts.appendChild(feed, posts.firstChild)
     })

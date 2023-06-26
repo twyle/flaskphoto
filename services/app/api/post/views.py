@@ -5,7 +5,7 @@ from flask_login import current_user, login_required
 from ..utils.http_status_codes import HTTP_200_OK, HTTP_201_CREATED
 from .controller.post import (
     handle_create_post, handle_load_posts, handle_get_post, handle_update_post,
-    handle_delete_post
+    handle_delete_post, handle_like, handle_comment
 )
 
 post = Blueprint("post", __name__)
@@ -22,8 +22,7 @@ def create_post():
 # @login_required
 def get_post():
     """Render the home page."""
-    post_id = request.args.get('post_id')
-    return handle_get_post(post_id)
+    return handle_get_post(request.args.get('post_id'))
 
 
 @post.route("/", methods=['DELETE'])
@@ -43,19 +42,15 @@ def update_post():
 @post.route("/like", methods=['GET'])
 # @login_required
 def like_post():
-    """Render the home page."""
-    post_id = request.args.get('post_id')
-    print(post_id)
-    return jsonify({'success': 'liked'}), HTTP_200_OK
+    """Like or dislike a post."""
+    return handle_like(request.args.get('post_id'))
 
 
-@post.route("/comment", methods=['GET'])
+@post.route("/comment", methods=['POST'])
 # @login_required
 def comment_on_post():
     """Render the home page."""
-    post_id = request.args.get('post_id')
-    print(post_id)
-    return jsonify({'success': 'commented'}), HTTP_200_OK
+    return handle_comment(request.args, request.form)
 
 
 @post.route("/load_posts", methods=['GET'])

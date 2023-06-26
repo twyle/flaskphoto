@@ -1,6 +1,7 @@
 from ..auth.models.user import User
 from ..post.models.post_model import Post
 from ..post.models.like_model import Like
+from ..post.models.comment_model import Comment
 from faker import Faker
 from datetime import datetime, timedelta
 fake = Faker()
@@ -47,6 +48,14 @@ def generate_likes(users: list[User], posts: list[Post], likes_count: int = 100)
         for _ in range(likes_count)
     ]
     
+def generate_comments(users: list[User], posts: list[Post], comments_count: int = 100) -> list[Comment]:
+    """Generate comments."""
+    comments = [
+        Comment(user=random.choice(users), post=random.choice(posts), text=fake.text())
+        for _ in range(comments_count)
+    ]
+    return comments
+    
 def save_to_database(items: list[User | Post]) -> None:
     """Save many items to database."""
     db.session.add_all(items)
@@ -60,4 +69,6 @@ def create_data() -> None:
     save_to_database(posts)
     likes = generate_likes(users=users, posts=posts, likes_count=100)
     save_to_database(likes)
+    comments = generate_comments(users=users, posts=posts, comments_count=100)
+    save_to_database(comments)
      
