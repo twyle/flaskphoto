@@ -103,7 +103,7 @@ def logout():
 
 
 @auth.route("/update", methods=["PUT"])
-def update():
+def update_user():
     """Update a logged in user."""
     print(request.args.get('user_id'))
     print(request.form)

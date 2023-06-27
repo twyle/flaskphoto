@@ -10,7 +10,9 @@ from ...extensions.extensions import db
 from ..models.like_model import Like
 from ..models.comment_model import Comment
 import random
-from flask_login import current_user
+from ..models.bookmark_model import Bookmark
+from ...auth.models.user import User
+
 
 ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'}
 
@@ -68,11 +70,23 @@ def handle_load_posts(args: dict) -> tuple[str, int]:
                 },
                 'comments': [
                     comment.text for comment in Comment.query.filter_by(post_id=post.id).all()
-                ]
+                ],
+                'user': get_user(int(args.get('user_id')))
         }
             for post in posts_raw
     ]
     return jsonify(posts), HTTP_200_OK
+
+def get_user(user_id: int) -> dict:
+    """Get the user with the id."""
+    current_user = User.query.filter_by(id=user_id).first()
+    return {
+        'user_name': current_user.username,
+        'image': url_for('static', filename=f'img/{current_user.image_file}'),
+        'user_id': current_user.id,
+        'email': current_user.email,
+        'handle': f'@{"".join(current_user.username.split())}'
+    }
 
 
 def handle_get_post(post_id: str) -> tuple[str, int]:
@@ -113,19 +127,20 @@ def handle_delete_post(post_id: str) -> tuple[str, int]:
     return jsonify({'success': 'deleted'}), HTTP_200_OK
 
 
-def handle_like(post_id: str) -> tuple[str, int]:
+def handle_like(post_args: dict) -> tuple[str, int]:
     """Like or unlike a post."""
-    user_id = current_user.id
+    user_id: int = int(post_args.get('user_id'))
+    post_id: int = int(post_args.get('post_id'))
     like = Like.query.filter(Like.user_id==user_id and Like.post_id==int(post_id)).first()
     if like:
         db.session.delete(like)
         db.session.commit()
         return jsonify({'success': 'unliked'}), HTTP_200_OK
     db.session.add(
-        Like(user_id=user_id, post_id=int(post_id))
+        Like(user_id=user_id, post_id=post_id)
     )
     db.session.commit()
-    return jsonify({'success': 'liked'}), HTTP_200_OK
+    return jsonify({'success': 'liked'}), HTTP_201_CREATED
 
 
 def handle_comment(post_args: dict, post_data: dict) -> tuple[str, int]:
@@ -138,7 +153,37 @@ def handle_comment(post_args: dict, post_data: dict) -> tuple[str, int]:
         user_id=user_id,
         text=comment_text
     )
-    # db.session.add(comment)
-    # db.session.commit()
-    print(comment_text, user_id, post_id)
-    return jsonify({'success': 'commented'}), HTTP_200_OK
+    db.session.add(comment)
+    db.session.commit()
+    return jsonify({'success': 'commented'}), HTTP_201_CREATED
+
+
+def handle_bookmark(post_args: dict) -> tuple[str, int]:
+    """Bookmark or unbookmark a post."""
+    user_id: int = int(post_args.get('user_id'))
+    post_id: int = int(post_args.get('post_id'))
+    bookmark = Bookmark.query.filter(Bookmark.user_id==user_id and Bookmark.post_id==int(post_id)).first()
+    if bookmark:
+        db.session.delete(bookmark)
+        db.session.commit()
+        return jsonify({'success': 'unbookmarked'}), HTTP_200_OK
+    db.session.add(
+        Bookmark(user_id=user_id, post_id=post_id)
+    )
+    db.session.commit()
+    return jsonify({'success': 'bookmarked'}), HTTP_201_CREATED
+
+
+def handle_get_post_comments(post_id: str) -> tuple[str, int]:
+    """get a posts comments"""
+    comments_raw = Comment.query.filter_by(post_id=int(post_id)).limit(3)
+    comments = [
+        {
+            'author_image': url_for('static', filename=f'img/{comment.user.image_file}'),
+            'author_name': comment.user.username,
+            'text': comment.text
+        }
+        for comment in comments_raw
+    ]
+    return jsonify(comments), HTTP_200_OK
+    

@@ -8,6 +8,7 @@ import random
 from flask_login import current_user
 # from ..models.friend_model import Friend
 from ...extensions.extensions import db
+from ...post.models.bookmark_model import Bookmark
 
 
 def handle_load_posts() -> tuple[str, int]:
@@ -19,7 +20,7 @@ def handle_load_posts() -> tuple[str, int]:
         'email': current_user.email,
         'handle': f'@{"".join(current_user.username.split())}'
     }
-    posts_raw = Post.query.all()
+    posts_raw = Post.query.limit(5)
     posts = [
             {
                 'id': post.id,
@@ -37,16 +38,34 @@ def handle_load_posts() -> tuple[str, int]:
                 ],
                 'comments_count': Comment.query.filter_by(post_id=post.id).count(),
                 'comment': {
-                    'author': Comment.query.filter_by(post_id=post.id).limit(1).first().user.username,
-                    'text': Comment.query.filter_by(post_id=post.id).limit(1).first().post.text
+                    'author': Comment.query.filter_by(post_id=post.id).limit(1).first().user.username if Comment.query.filter_by(post_id=post.id).limit(1).first() else '',
+                    'text': Comment.query.filter_by(post_id=post.id).limit(1).first().post.text if Comment.query.filter_by(post_id=post.id).limit(1).first() else ''
                 },
                 'comments': [
                     comment.text for comment in Comment.query.filter_by(post_id=post.id).all()
-                ]
+                ],
+                'bookmarked': bookmarked(user_id=user['user_id'], post_id=post.id),
+                'liked': liked(user_id=user['user_id'], post_id=post.id)
         }
             for post in posts_raw
     ]
+    print([post['bookmarked'] for post in posts])
     return render_template("home/index.html", posts=posts, user=user), HTTP_200_OK
+
+
+def bookmarked(user_id: int, post_id: int) -> bool:
+    """Check if user bookmarked this article."""
+    bookmark = Bookmark.query.filter(Bookmark.user_id==user_id and Bookmark.post_id==post_id).first()
+    if bookmark:
+        return True
+    return False
+
+def liked(user_id: int, post_id: int) -> bool:
+    """Check if user liked this article."""
+    like = Like.query.filter(Like.user_id==user_id and Like.post_id==post_id).first()
+    if like:
+        return True
+    return False
 
 
 def handle_befriend(request_args: dict) -> tuple[str, int]:

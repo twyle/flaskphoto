@@ -5,7 +5,7 @@ from flask_login import current_user, login_required
 from ..utils.http_status_codes import HTTP_200_OK, HTTP_201_CREATED
 from .controller.post import (
     handle_create_post, handle_load_posts, handle_get_post, handle_update_post,
-    handle_delete_post, handle_like, handle_comment
+    handle_delete_post, handle_like, handle_comment, handle_bookmark, handle_get_post_comments
 )
 
 post = Blueprint("post", __name__)
@@ -43,7 +43,14 @@ def update_post():
 # @login_required
 def like_post():
     """Like or dislike a post."""
-    return handle_like(request.args.get('post_id'))
+    return handle_like(request.args)
+
+
+@post.route("/bookmark", methods=['GET'])
+# @login_required
+def bookmark_post():
+    """Like or dislike a post."""
+    return handle_bookmark(request.args)
 
 
 @post.route("/comment", methods=['POST'])
@@ -57,4 +64,10 @@ def comment_on_post():
 def load_posts():
     """Load posts."""
     return handle_load_posts(request.args)
+
+
+@post.route("/post_comments", methods=['GET'])
+def post_comments():
+    """Load posts."""
+    return handle_get_post_comments(request.args.get('post_id'))
     

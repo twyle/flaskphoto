@@ -18,7 +18,7 @@
     <!-----------------------NAVBAR------------------------------>
     <nav>
         <div class="container">
-            <h2 class="logo">logo</h2>
+            <h2 class="logo" id="{{ user.user_id }}">logo</h2>
             <div class="search-bar">
                 <i class="uil uil-search"></i>
                 <input type="search" name="" id="" placeholder="Search for creators, inspirations and projects.">
@@ -74,7 +74,9 @@
                             <div class="head">
                                 <div class="user">
                                     <div class="profile-photo profile-menu" id="{{ post.user_id }}">
-                                        <img class="user-profile-btn" src="{{ post.author_image }}" alt="">
+                                        <button class="user-profile-btn">
+                                            <img src="{{ post.author_image }}" onclick="viewProfile()" alt="">
+                                        </button>
                                     </div>
                                     <div class="ingo">
                                         <h3 class="user-name">{{ post.author_name }}</h3>
@@ -130,18 +132,45 @@
                                     <span>
                                         <i class="fa-regular fa-comment active"></i>
                                     </span>
+                                    {% if post['liked'] %}
+                                        <span>
+                                            <i class="fa-regular fa-trash-can active"></i>
+                                        </span>
+                                    {% else %}
+                                        <span>
+                                            <i class="fa-solid fa-trash-can active"></i>
+                                        </span>
+                                    {% endif %}
+
                                 </div>
 
-                                <div class="bookmark">
-                                    <span>
-                                        <i class="fa-regular fa-pen-to-square active"></i>
-                                    </span>
-                                    <span>
-                                        <i class="fa-regular fa-trash-can active"></i>
-                                    </span>
-                                    <span>
-                                        <i class="fa-solid fa-bookmark"></i>
-                                    </span>
+                                <div class="owner-actions">
+                                    {% if user.user_id == post.user_id %}
+                                        <span>
+                                            <i class="fa-regular fa-pen-to-square active"></i>
+                                        </span>
+                                        <span>
+                                            <i class="fa-regular fa-trash-can active"></i>
+                                        </span>
+                                    {% endif %}
+                                    <div class="bookmark">
+                                        {% if post['bookmarked'] %}
+                                            <span>
+                                                <i class="fa-regular fa-bookmark"></i>
+                                            </span>
+                                            <span>
+                                                <i class="fa-solid fa-bookmark active"></i>
+                                            </span>
+                                        {% else %}
+                                            <span>
+                                                <i class="fa-regular fa-bookmark active"></i>
+                                            </span>
+                                            <span>
+                                                <i class="fa-solid fa-bookmark"></i>
+                                            </span>
+                                        {% endif %}
+                                        
+                                    </div>
                                 </div>
 
                             </div>
@@ -181,7 +210,7 @@
                                 </p>
                             </div>
 
-                            <div class="comments text-muted">
+                            <div class="comments text-muted view-comments-btn">
                                 View all {{ post.comments_count }} comments
                             </div>
 
@@ -447,45 +476,15 @@
 
             <!-----POST COMMENTS POPUP----------->
             <div class="post-comments-popup">
-                <div>
+
+                <!-- <div>
                     <div class="profile-photo profile-menu">
                         <img src="{{ url_for('static', filename='img/profile-2.jpg') }}" alt="">
                     </div>
                     <div class="notification-body">
                         <b>Mollette Okoth</b> accepted your friend request
-                        <small class="text muted">2 DAYS AGO</small>
                     </div>
-                </div>
-
-                <div>
-                    <div class="profile-photo profile-menu">
-                        <img src="./img/profile-3.jpg" alt="">
-                    </div>
-                    <div class="notification-body">
-                        <b>Felix Okoth</b> liked your post
-                        <small class="text muted">2 MINUTES AGO</small>
-                    </div>
-                </div>
-
-                <div>
-                    <div class="profile-photo profile-menu">
-                        <img src="./img/profile-4.jpg" alt="">
-                    </div>
-                    <div class="notification-body">
-                        <b>Lewis Yamo</b> commented on your post
-                        <small class="text muted">2 HOURS AGO</small>
-                    </div>
-                </div>
-
-                <div>
-                    <div class="profile-photo profile-menu">
-                        <img src="./img/profile-5.jpg" alt="">
-                    </div>
-                    <div class="notification-body">
-                        <b>Merry Munane</b> and <b>21 others</b> liked your post
-                        <small class="text muted">2 MINUTES AGO</small>
-                    </div>
-                </div>
+                </div> -->
 
             </div>
 

@@ -64,6 +64,15 @@ def save_to_database(items: list[User | Post]) -> None:
 def create_data() -> None:
     """Create data for the database."""
     users = generate_users()
+    users.append(
+        User(
+            username='Lyle Okoth',
+            email='lyceokoth@gmail.com',
+            image_file='lyle.png',
+            password='password',
+            account_activated=True
+        ) 
+    )
     save_to_database(users)
     posts = generate_posts(count=20, authors=users)
     save_to_database(posts)

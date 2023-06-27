@@ -1,3 +1,6 @@
+//USER ID
+const userId = document.querySelector('.logo').id
+
 //CREATE POST
 const createPostBtn = document.querySelector('.create-post-btn')
 const createPostFormDiv = document.querySelector('.create-post')
@@ -10,10 +13,6 @@ const editPostDiv = document.querySelector('.edit-post')
 const updatePostImage = document.querySelector('.post-image-update')
 let image;
 let oldPost;
-
-//VIEW COMMENTS
-const postCommentBtns = document.querySelectorAll('.comments')
-const postComments = document.querySelector('.post-comments')
 
 //PROFILE DROPDOWN
 const profileDropdwon = document.querySelector('.profile-photo')
@@ -38,7 +37,36 @@ document.addEventListener('click', (e) => {
         }, 1000)
         const post = e.target.closest('.feed')
         const postId = post.id
-        fetch(`http://localhost:5000/post/like?post_id=${postId}`, {
+        console.log(postId)
+        console.log(userId)
+        fetch(`http://localhost:5000/post/like?post_id=${postId}&user_id=${userId}`, {
+            method: 'GET'
+        }).then(
+            response => response.json()
+        ).then(
+            response => {
+                console.log(JSON.stringify(response))
+            }
+        )
+    }
+})
+
+//BOOKMARK
+document.addEventListener('click', (e) => {
+    if (e.target.classList.contains('fa-bookmark')) {
+        var sibling;
+        if(e.target.closest('span').nextElementSibling){
+            sibling = e.target.closest('span').nextElementSibling
+        }
+        else{
+            sibling = e.target.closest('span').previousElementSibling
+        }
+        e.target.classList.toggle('active')
+        sibling.querySelector('i').classList.toggle('active')
+
+        const feed = sibling.closest('.feed')
+        const postId = feed.id
+        fetch(`http://localhost:5000/post/bookmark?post_id=${postId}&user_id=${userId}`, {
             method: 'GET'
         }).then(
             response => response.json()
@@ -80,61 +108,86 @@ document.addEventListener('submit', (e) => {
     }
 })
 
-//PROFILE
-const profileBtns = document.querySelectorAll('.profile-menu')
-const viewProfile = document.querySelector('.view-profile')
-const closeProfile = document.querySelector('.close-profile')
-profileBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-        const userId = btn.id
-        fetch(`http://localhost:5000/auth/get?user_id=${userId}`, {
+//VIEW COMMENTS
+const postComments = document.querySelector('.post-comments')
+document.addEventListener('click', (e) => {
+    if(e.target.classList.contains('view-comments-btn')){
+        const postId = e.target.closest('.feed').id
+        fetch(`http://localhost:5000/post/post_comments?post_id=${postId}`, {
             method: 'GET',
         }).then(
             response => response.json()
         ).then(
             response => {
                 console.log(JSON.stringify(response))
-                const heading = viewProfile.querySelector('h1')
-                heading.textContent = `${response['user_name']}'s Profile.`
-                const profileImg = viewProfile.querySelector('.profile-menu-img')
-                profileImg.src = response['image']
-                const userName = viewProfile.querySelector('h3')
-                userName.textContent = response['user_name']
-                const userNametxt = viewProfile.querySelector('#user-name')
-                userNametxt.value = response['user_name']
-                const emailText = viewProfile.querySelector('#email')
-                emailText.value = response['email']
-                const handleTxt = viewProfile.querySelector('#handle')
-                handleTxt.value = response['handle']
+                const postCommentsPopup = postComments.querySelector('.post-comments-popup')
+                response.forEach(comment => {
+                    const div = document.createElement('div')
+                    const profilePhoto = document.createElement('div')
+                    profilePhoto.classList.add('profile-photo')
+                    profilePhoto.classList.add('profile-menu')
+                    const img = document.createElement('img')
+                    img.src = comment['author_image']
+                    profilePhoto.appendChild(img)
+                    const body = document.createElement('div')
+                    body.classList.add('notification-body')
+                    body.innerHTML = `<b>${comment['author_name']}</b> ${comment['text']}`
+                    div.appendChild(profilePhoto)
+                    div.appendChild(body)
+                    postCommentsPopup.appendChild(div)
+                })
             }
         )
-        viewProfile.style.display = 'block'
-    })
+        postComments.style.display = 'block'
+    }
 })
 
-closeProfile.addEventListener('click', () => {
-    viewProfile.style.display = 'none'
+document.addEventListener('click', (e) => {
+    if(e.target.classList.contains('post-comments')){
+        console.log(e.target)
+        postComments.style.display = 'none'
+    }
 })
 
-// userProfileBtn.addEventListener('click', () => {
-//     profileCtxMenu.style.display = 'none'
-//     editProfileDiv.style.display = 'block'
-// })
-
-// editProfileDiv.addEventListener('click', (e) => {
-//     if (e.target.classList.contains('edit-profile')) {
-//         editProfileDiv.style.display = 'none'
-//     }
-// })
-
-// document.addEventListener('click', (e) => {
-//     if (e.target.classList.contains('profile-photo')) {
-//         console.log(e.target)
-//         const viewProfile = document.querySelector('.view-user-profile')
+//PROFILE
+// const profileBtns = document.querySelectorAll('.profile-menu')
+// const viewProfile = document.querySelector('.view-profile')
+// const closeProfile = document.querySelector('.close-profile')
+// profileBtns.forEach(btn => {
+//     btn.addEventListener('click', () => {
+//         const userId = btn.id
+//         fetch(`http://localhost:5000/auth/get?user_id=${userId}`, {
+//             method: 'GET',
+//         }).then(
+//             response => response.json()
+//         ).then(
+//             response => {
+//                 console.log(JSON.stringify(response))
+//                 const heading = viewProfile.querySelector('h1')
+//                 heading.textContent = `${response['user_name']}'s Profile.`
+//                 const profileImg = viewProfile.querySelector('.profile-menu-img')
+//                 profileImg.src = response['image']
+//                 const userName = viewProfile.querySelector('h3')
+//                 userName.textContent = response['user_name']
+//                 const userNametxt = viewProfile.querySelector('#user-name')
+//                 userNametxt.value = response['user_name']
+//                 const emailText = viewProfile.querySelector('#email')
+//                 emailText.value = response['email']
+//                 const handleTxt = viewProfile.querySelector('#handle')
+//                 handleTxt.value = response['handle']
+//             }
+//         )
 //         viewProfile.style.display = 'block'
-//     }
+//     })
 // })
 
+// closeProfile.addEventListener('click', () => {
+//     viewProfile.style.display = 'none'
+// })
+
+function viewProfile(e){
+    console.log('view profile')
+}
 
 //CREATE POST
 const newPostImageUpload = document.querySelector('.new-post-image')
@@ -164,21 +217,6 @@ createPostBtn.addEventListener('click', () => {
 
 createPostFormDiv.addEventListener('click', (e) => {
     if (e.target.classList.contains('create-post')) {
-        createPostFormDiv.style.display = 'none'
-        const formData = new FormData(createPostForm)
-        formData.append('file', image)
-        fetch(createPostForm.action, {
-            method: 'POST',
-            body: formData
-        }).then(
-            response => response.json()
-        ).then(
-            response => {
-                console.log(JSON.stringify(response))
-                // createNewPost(createPostForm)
-            }
-        )
-
         createPostFormDiv.style.display = 'none'
     }
 })
@@ -474,21 +512,6 @@ editProfileForm.addEventListener('submit', (e) => {
     )
 })
 
-// editProfileDiv.addEventListener('click', (e) => {
-//     if (e.target.classList.contains('edit-profile')) {
-//         fetch(`http://localhost:5000/auth/update`, {
-//             method: 'PUT'
-//         }).then(
-//             response => response.json()
-//         ).then(
-//             response => {
-//                 console.log(JSON.stringify(response))
-//             }
-//         )
-//         editProfileDiv.style.display = 'none'
-//     }
-// })
-
 //USER POST BUTTONS
 document.addEventListener('click', (e) => {
     if (e.target.classList.contains('post-menu-btn')) {
@@ -540,7 +563,7 @@ const observer = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
         if (entry.isIntersecting) {
             entry.target.classList.add('intersecting')
-            fetch(`http://localhost:5000/post/load_posts?offset=${offSet}&limit=${limit}`, {
+            fetch(`http://localhost:5000/post/load_posts?offset=${offSet}&limit=${limit}&user_id=${userId}`, {
                 method: 'GET',
             }).then(
                 response => response.json()
@@ -583,6 +606,9 @@ const loadMorePosts = (new_posts) => {
 
         profilePhoto = document.createElement('div');
         profilePhoto.classList.add('profile-photo')
+        profilePhoto.addEventListener('click', (e) => {
+            viewProfile(e)
+        })
 
         profileImg = document.createElement('img');
         profileImg.src = post['author_image']
@@ -646,7 +672,8 @@ const loadMorePosts = (new_posts) => {
         actionButtons = document.createElement('div')
         actionButtons.classList.add('action-buttons')
 
-        actionButtons.innerHTML = `
+        if(post['user_id'] == post['user']['user_id']){
+            actionButtons.innerHTML = `
         <div class="interaction-button">
             <div class="like-button">
                 <span>
@@ -661,15 +688,52 @@ const loadMorePosts = (new_posts) => {
             </span>
         </div>
 
-        <div class="bookmark">
+        <div class="owner-actions">
             <span>
                 <i class="fa-regular fa-pen-to-square active"></i>
             </span>
             <span>
                 <i class="fa-regular fa-trash-can active"></i>
             </span>
+            <div class="bookmark">
+                <span>
+                    <i class="fa-regular fa-bookmark active"></i>
+                </span>
+                <span>
+                    <i class="fa-solid fa-bookmark"></i>
+                </span>
+            </div>
         </div>
         `
+        }
+        else{
+            actionButtons.innerHTML = `
+        <div class="interaction-button">
+            <div class="like-button">
+                <span>
+                    <i class="fa-solid fa-heart"></i>
+                </span>
+                <span>
+                    <i class="fa-regular fa-heart active"></i>
+                </span>
+            </div>
+            <span>
+                <i class="fa-regular fa-comment active"></i>
+            </span>
+        </div>
+
+        <div class="owner-actions">
+            <div class="bookmark">
+                <span>
+                    <i class="fa-regular fa-bookmark active"></i>
+                </span>
+                <span>
+                    <i class="fa-solid fa-bookmark"></i>
+                </span>
+            </div>
+        </div>
+        `
+        }
 
         form = document.createElement('form')
         form.classList.add('comment-box')
@@ -739,6 +803,7 @@ const loadMorePosts = (new_posts) => {
         viewComments = document.createElement('div')
         viewComments.classList.add('comments')
         viewComments.classList.add('text-muted')
+        viewComments.classList.add('view-comments-btn')
         viewComments.innerHTML = `View all ${post.comments_count} comments`
 
         feed.appendChild(head)

@@ -382,6 +382,20 @@ main .container{
      display: block;
  }
 
+.middle .feed .action-buttons .owner-actions{
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.middle .feed .action-buttons .owner-actions .bookmark i{
+    display: none;
+}
+
+.middle .feed .action-buttons .owner-actions .bookmark i.active{
+    display: block;
+}
+
  .middle .liked-by{
     display: flex;
 }
