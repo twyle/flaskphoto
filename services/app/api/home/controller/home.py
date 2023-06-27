@@ -1,13 +1,24 @@
 from ...post.models.post_model import Post
 from ...post.models.like_model import Like
 from ...post.models.comment_model import Comment
-from flask import url_for, render_template
+from flask import url_for, render_template, jsonify
 from datetime import datetime
-from ...utils.http_status_codes import HTTP_200_OK
+from ...utils.http_status_codes import HTTP_200_OK, HTTP_201_CREATED
 import random
+from flask_login import current_user
+# from ..models.friend_model import Friend
+from ...extensions.extensions import db
+
 
 def handle_load_posts() -> tuple[str, int]:
     """Load the initial posts."""
+    user = {
+        'user_name': current_user.username,
+        'image': url_for('static', filename=f'img/{current_user.image_file}'),
+        'user_id': current_user.id,
+        'email': current_user.email,
+        'handle': f'@{"".join(current_user.username.split())}'
+    }
     posts_raw = Post.query.all()
     posts = [
             {
@@ -35,4 +46,16 @@ def handle_load_posts() -> tuple[str, int]:
         }
             for post in posts_raw
     ]
-    return render_template("home/index.html", posts=posts), HTTP_200_OK
+    return render_template("home/index.html", posts=posts, user=user), HTTP_200_OK
+
+
+def handle_befriend(request_args: dict) -> tuple[str, int]:
+    """Befreind a given user."""
+    user_id: int = int(request_args.get('user_id'))
+    friend_id: int = int(request_args.get('friend_id'))
+    
+    # friend = Friend.query.filter(Friend.user_id==user_id and Friend.friend_id==friend_id).first()
+    # if not friend:
+    #     db.session.add(Friend(user_id=user_id, friend_id=friend_id))
+    #     db.session.commit()
+    return jsonify({'success': 'befriended'}), HTTP_201_CREATED

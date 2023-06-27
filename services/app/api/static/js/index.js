@@ -25,7 +25,7 @@ const editProfileDiv = document.querySelector('.edit-profile')
 
 //LIKE
 document.addEventListener('click', (e) => {
-    if(e.target.classList.contains('fa-heart')){
+    if (e.target.classList.contains('fa-heart')) {
         const likeButtons = e.target.closest('.like-button')
         const likeButtonSolid = likeButtons.querySelector('.fa-solid')
         const likeButtonRegular = likeButtons.querySelector('.fa-regular')
@@ -38,7 +38,7 @@ document.addEventListener('click', (e) => {
         }, 1000)
         const post = e.target.closest('.feed')
         const postId = post.id
-        fetch(`http://localhost:5000/post/like?post_id=${postId}`,{
+        fetch(`http://localhost:5000/post/like?post_id=${postId}`, {
             method: 'GET'
         }).then(
             response => response.json()
@@ -52,7 +52,7 @@ document.addEventListener('click', (e) => {
 
 //COMMENT
 document.addEventListener('click', (e) => {
-    if(e.target.classList.contains('fa-comment')){
+    if (e.target.classList.contains('fa-comment')) {
         const feed = e.target.closest('.feed')
         const comment = feed.querySelector('.comment-box')
         console.log(feed)
@@ -61,11 +61,11 @@ document.addEventListener('click', (e) => {
 })
 
 document.addEventListener('submit', (e) => {
-    if(e.target.classList.contains('comment-form')){
+    if (e.target.classList.contains('comment-form')) {
         e.preventDefault()
-        
+
         const formData = new FormData(e.target)
-        fetch(e.target.action,{
+        fetch(e.target.action, {
             method: 'POST',
             body: formData
         }).then(
@@ -77,34 +77,37 @@ document.addEventListener('submit', (e) => {
         )
 
         e.target.style.display = 'none'
-        }
+    }
 })
 
-// const commentForm = document.querySelector('.comment-form')
-// commentForm.addEventListener('submit', (e) => {
-//     e.preventDefault()
-
-//     const formData = new FormData(commentForm)
-//     fetch(commentForm.action,{
-//         method: 'POST',
-//         body: formData
-//     }).then(
-//         response => response.json()
-//     ).then(
-//         response => {
-//             console.log(JSON.stringify(response))
-//         }
-//     )
-
-//     commentForm.style.display = 'none'
-// })
-
 //PROFILE
-const profileBtns =  document.querySelectorAll('.profile-menu')
-const viewProfile = document.querySelector('.view-user-profile')
+const profileBtns = document.querySelectorAll('.profile-menu')
+const viewProfile = document.querySelector('.view-profile')
 const closeProfile = document.querySelector('.close-profile')
 profileBtns.forEach(btn => {
     btn.addEventListener('click', () => {
+        const userId = btn.id
+        fetch(`http://localhost:5000/auth/get?user_id=${userId}`, {
+            method: 'GET',
+        }).then(
+            response => response.json()
+        ).then(
+            response => {
+                console.log(JSON.stringify(response))
+                const heading = viewProfile.querySelector('h1')
+                heading.textContent = `${response['user_name']}'s Profile.`
+                const profileImg = viewProfile.querySelector('.profile-menu-img')
+                profileImg.src = response['image']
+                const userName = viewProfile.querySelector('h3')
+                userName.textContent = response['user_name']
+                const userNametxt = viewProfile.querySelector('#user-name')
+                userNametxt.value = response['user_name']
+                const emailText = viewProfile.querySelector('#email')
+                emailText.value = response['email']
+                const handleTxt = viewProfile.querySelector('#handle')
+                handleTxt.value = response['handle']
+            }
+        )
         viewProfile.style.display = 'block'
     })
 })
@@ -112,6 +115,25 @@ profileBtns.forEach(btn => {
 closeProfile.addEventListener('click', () => {
     viewProfile.style.display = 'none'
 })
+
+// userProfileBtn.addEventListener('click', () => {
+//     profileCtxMenu.style.display = 'none'
+//     editProfileDiv.style.display = 'block'
+// })
+
+// editProfileDiv.addEventListener('click', (e) => {
+//     if (e.target.classList.contains('edit-profile')) {
+//         editProfileDiv.style.display = 'none'
+//     }
+// })
+
+// document.addEventListener('click', (e) => {
+//     if (e.target.classList.contains('profile-photo')) {
+//         console.log(e.target)
+//         const viewProfile = document.querySelector('.view-user-profile')
+//         viewProfile.style.display = 'block'
+//     }
+// })
 
 
 //CREATE POST
@@ -121,17 +143,17 @@ newPostImageUpload.addEventListener('click', () => {
     const input = document.createElement('input');
     input.type = 'file';
 
-    input.onchange = event => { 
+    input.onchange = event => {
         const imageFiles = event.target.files
         const imageFilesLength = imageFiles.length
-        if (imageFilesLength > 0){
+        if (imageFilesLength > 0) {
             image = imageFiles[0]
             const imageSrc = URL.createObjectURL(imageFiles[0])
             photoHolder.classList.add('photo')
             const postPhoto = createPostFormDiv.querySelector('.post-photo')
             postPhoto.src = imageSrc
         }
-     }
+    }
 
     input.click();
 })
@@ -141,11 +163,11 @@ createPostBtn.addEventListener('click', () => {
 })
 
 createPostFormDiv.addEventListener('click', (e) => {
-    if(e.target.classList.contains('create-post')){
+    if (e.target.classList.contains('create-post')) {
         createPostFormDiv.style.display = 'none'
         const formData = new FormData(createPostForm)
         formData.append('file', image)
-        fetch(createPostForm.action,{
+        fetch(createPostForm.action, {
             method: 'POST',
             body: formData
         }).then(
@@ -156,7 +178,7 @@ createPostFormDiv.addEventListener('click', (e) => {
                 // createNewPost(createPostForm)
             }
         )
-    
+
         createPostFormDiv.style.display = 'none'
     }
 })
@@ -166,7 +188,7 @@ createPostForm.addEventListener('submit', (e) => {
 
     const formData = new FormData(createPostForm)
     formData.append('file', image)
-    fetch(createPostForm.action,{
+    fetch(createPostForm.action, {
         method: 'POST',
         body: formData
     }).then(
@@ -186,47 +208,47 @@ const createNewPost = (form) => {
     const formData = new FormData(form)
     const newPostLocation = formData.get('location')
     const newPostText = formData.get('text')
-    fetch(`http://localhost:5000/post?post_id=${postId}`,{
-            method: 'GET'
-        }).then(
-            response => response.json()
-        ).then(
-            response => {
-                console.log(JSON.stringify(response))
-                feed = document.createElement( 'div' );
-                feed.classList.add('feed')
+    fetch(`http://localhost:5000/post?post_id=${postId}`, {
+        method: 'GET'
+    }).then(
+        response => response.json()
+    ).then(
+        response => {
+            console.log(JSON.stringify(response))
+            feed = document.createElement('div');
+            feed.classList.add('feed')
 
-                head = document.createElement( 'div' );
-                head.classList.add('head')
+            head = document.createElement('div');
+            head.classList.add('head')
 
-                user = document.createElement( 'div' );
-                user.classList.add('user')
+            user = document.createElement('div');
+            user.classList.add('user')
 
-                profilePhoto = document.createElement( 'div' );
-                profilePhoto.classList.add('profile-photo')
+            profilePhoto = document.createElement('div');
+            profilePhoto.classList.add('profile-photo')
 
-                profileImg = document.createElement('img');
-                profileImg.src = response['user_photo']
+            profileImg = document.createElement('img');
+            profileImg.src = response['user_photo']
 
-                profilePhoto.appendChild(profileImg)
+            profilePhoto.appendChild(profileImg)
 
-                ingo = document.createElement( 'div' );
-                ingo.classList.add('ingo')
+            ingo = document.createElement('div');
+            ingo.classList.add('ingo')
 
-                h3 = document.createElement( 'h3' );
-                h3.innerHTML = response['user_name']
-                small = document.createElement( 'small' );
-                small.innerHTML = `${newPostLocation}, ${response["time"]} AGO`
+            h3 = document.createElement('h3');
+            h3.innerHTML = response['user_name']
+            small = document.createElement('small');
+            small.innerHTML = `${newPostLocation}, ${response["time"]} AGO`
 
-                ingo.appendChild(h3)
-                ingo.appendChild(small)
+            ingo.appendChild(h3)
+            ingo.appendChild(small)
 
-                user.appendChild(profilePhoto)
-                user.appendChild(ingo)
+            user.appendChild(profilePhoto)
+            user.appendChild(ingo)
 
-                span = document.createElement('span')
-                span.classList.add('edit')
-                span.innerHTML = `
+            span = document.createElement('span')
+            span.classList.add('edit')
+            span.innerHTML = `
                     <i class="uil uil-ellipsis-h" id="context-dropdown"></i>
                                         
                     <div class="context-menu">
@@ -237,26 +259,26 @@ const createNewPost = (form) => {
                         </div>
                     </div>
                 `
-                head.appendChild(user)
-                head.appendChild(span)
+            head.appendChild(user)
+            head.appendChild(span)
 
-                postText = document.createElement('div');
-                postText.classList.add('post-text')
-                postText.classList.add('text-muted')
-                postText.innerHTML = newPostText
+            postText = document.createElement('div');
+            postText.classList.add('post-text')
+            postText.classList.add('text-muted')
+            postText.innerHTML = newPostText
 
-                postPhoto = document.createElement( 'div' );
-                postPhoto.classList.add('photo')
+            postPhoto = document.createElement('div');
+            postPhoto.classList.add('photo')
 
-                postImg = document.createElement('img');
-                postImg.src = response["post_photo"]
+            postImg = document.createElement('img');
+            postImg.src = response["post_photo"]
 
-                postPhoto.appendChild(postImg)
+            postPhoto.appendChild(postImg)
 
-                actionButtons = document.createElement('div')
-                actionButtons.classList.add('action-buttons')
+            actionButtons = document.createElement('div')
+            actionButtons.classList.add('action-buttons')
 
-                actionButtons.innerHTML = `
+            actionButtons.innerHTML = `
                 <div class="interaction-button">
                     <div class="like-button">
                         <span>
@@ -272,22 +294,22 @@ const createNewPost = (form) => {
                 </div>
                 `
 
-                feed.appendChild(head)
-                feed.appendChild(postText)
-                feed.appendChild(postPhoto)
-                feed.appendChild(actionButtons)
+            feed.appendChild(head)
+            feed.appendChild(postText)
+            feed.appendChild(postPhoto)
+            feed.appendChild(actionButtons)
 
-                posts.insertBefore(feed, posts.firstChild)
-            }
-        )
+            posts.insertBefore(feed, posts.firstChild)
+        }
+    )
 }
 
 //DELETE POST
 document.addEventListener('click', (e) => {
-    if(e.target.classList.contains('fa-trash-can')){
+    if (e.target.classList.contains('fa-trash-can')) {
         const post = e.target.closest('.feed')
         const postId = post.id
-        fetch(`http://localhost:5000/post?post_id=${postId}`,{
+        fetch(`http://localhost:5000/post?post_id=${postId}`, {
             method: 'DELETE'
         }).then(
             response => response.json()
@@ -302,7 +324,7 @@ document.addEventListener('click', (e) => {
 
 //EDIT POST
 document.addEventListener('click', (e) => {
-    if(e.target.classList.contains('fa-pen-to-square')){
+    if (e.target.classList.contains('fa-pen-to-square')) {
         oldPost = e.target.closest('.feed')
         const postId = oldPost.id
         editPostDiv.id = postId
@@ -313,7 +335,7 @@ document.addEventListener('click', (e) => {
         const postPhoto = editPostDiv.querySelector('.post-photo')
         const textPhoto = editPostDiv.querySelector('.text-photo-img')
         console.log(profilePhoto)
-        fetch(`http://localhost:5000/post?post_id=${postId}`,{
+        fetch(`http://localhost:5000/post?post_id=${postId}`, {
             method: 'GET'
         }).then(
             response => response.json()
@@ -332,7 +354,7 @@ document.addEventListener('click', (e) => {
 })
 
 editPostDiv.addEventListener('click', (e) => {
-    if(e.target.classList.contains('edit-post')){
+    if (e.target.classList.contains('edit-post')) {
         editPostDiv.style.display = 'none'
     }
 })
@@ -342,16 +364,16 @@ updatePostImage.addEventListener('click', () => {
     const input = document.createElement('input');
     input.type = 'file';
 
-    input.onchange = event => { 
+    input.onchange = event => {
         const imageFiles = event.target.files
         const imageFilesLength = imageFiles.length
-        if (imageFilesLength > 0){
+        if (imageFilesLength > 0) {
             image = imageFiles[0]
             const imageSrc = URL.createObjectURL(imageFiles[0])
             console.log(postPhoto)
             postPhoto.src = imageSrc
         }
-     }
+    }
 
     input.click();
 })
@@ -361,13 +383,13 @@ editPostBtn.addEventListener('click', (e) => {
     const postId = post.id
     const postText = post.querySelector('.post-text')
     const formData = new FormData()
-    if (postText.value){
+    if (postText.value) {
         formData.append('text', postText.value)
     }
-    if (image){
+    if (image) {
         formData.append("file", image)
     }
-    fetch(`http://localhost:5000/post?post_id=${postId}`,{
+    fetch(`http://localhost:5000/post?post_id=${postId}`, {
         method: 'PUT',
         body: formData
     }).then(
@@ -381,17 +403,17 @@ editPostBtn.addEventListener('click', (e) => {
             const oldImage = oldImageDiv.querySelector('img')
             console.log(postId)
 
-            fetch(`http://localhost:5000/post?post_id=${postId}`,{
+            fetch(`http://localhost:5000/post?post_id=${postId}`, {
                 method: 'GET'
-                }).then(
-                    response => response.json()
-                ).then(
-                    response => {
-                        console.log(JSON.stringify(response))
-                        oldImage.src = response['photo']
-                        oldText.textContent = response['text']
-                    }
-                )
+            }).then(
+                response => response.json()
+            ).then(
+                response => {
+                    console.log(JSON.stringify(response))
+                    oldImage.src = response['photo']
+                    oldText.textContent = response['text']
+                }
+            )
 
             editPostDiv.style.display = 'none'
 
@@ -409,35 +431,82 @@ profileDropdwon.addEventListener('click', () => {
 })
 
 //EDIT PROFILE
+const updateProfileImage = document.querySelector('.profile-image-update')
+updateProfileImage.addEventListener('click', () => {
+    const profilePhoto = editProfileDiv.querySelector('.profile-menu-img')
+    const input = document.createElement('input');
+    input.type = 'file';
+
+    input.onchange = event => {
+        const imageFiles = event.target.files
+        const imageFilesLength = imageFiles.length
+        if (imageFilesLength > 0) {
+            image = imageFiles[0]
+            const imageSrc = URL.createObjectURL(imageFiles[0])
+            console.log(profilePhoto)
+            profilePhoto.src = imageSrc
+        }
+    }
+
+    input.click();
+})
 userProfileBtn.addEventListener('click', () => {
     profileCtxMenu.style.display = 'none'
     editProfileDiv.style.display = 'block'
 })
 
-editProfileDiv.addEventListener('click', (e) => {
-    if(e.target.classList.contains('edit-profile')){
-        editProfileDiv.style.display = 'none'
-    }
+const editProfileForm = document.querySelector('.edit-profile-form')
+editProfileForm.addEventListener('submit', (e) => {
+    e.preventDefault()
+
+    const form = new FormData(editProfileForm)
+    const userId = form.id
+    fetch(`http://localhost:5000/auth/update?user_id=${ userId }`, {
+        method: 'PUT',
+        body: form
+    }).then(
+        response => response.json()
+    ).then(
+        response => {
+            console.log(JSON.stringify(response))
+            editProfileDiv.style.display = 'none'
+        }
+    )
 })
 
+// editProfileDiv.addEventListener('click', (e) => {
+//     if (e.target.classList.contains('edit-profile')) {
+//         fetch(`http://localhost:5000/auth/update`, {
+//             method: 'PUT'
+//         }).then(
+//             response => response.json()
+//         ).then(
+//             response => {
+//                 console.log(JSON.stringify(response))
+//             }
+//         )
+//         editProfileDiv.style.display = 'none'
+//     }
+// })
+
 //USER POST BUTTONS
-const postMenuBtns = document.querySelectorAll('.post-menu-btn')
-postMenuBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-        const postMenuDiv = btn.nextElementSibling
+document.addEventListener('click', (e) => {
+    if (e.target.classList.contains('post-menu-btn')) {
+        const postMenuDiv = e.target.nextElementSibling
         console.log(postMenuDiv)
         postMenuDiv.style.display = 'block'
         setTimeout(() => {
             postMenuDiv.style.display = 'none'
-        }, 2000)
-    })
+        }, 3000)
+    }
 })
 
 //BEFRIEND
-const befriendBtns = document.querySelectorAll('.befriend')
-befriendBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-        fetch(`http://localhost:5000/friend_action`,{
+document.addEventListener('click', (e) => {
+    if (e.target.classList.contains('fa-user-plus')) {
+        console.log(e.target.getAttribute('userid'))
+        console.log(e.target.getAttribute('friendid'))
+        fetch(`http://localhost:5000/befriend`, {
             method: 'GET'
         }).then(
             response => response.json()
@@ -446,14 +515,13 @@ befriendBtns.forEach(btn => {
                 console.log(JSON.stringify(response))
             }
         )
-    })
+    }
 })
 
 //UNFRIEND
-const unfriendBtns = document.querySelectorAll('.unfriend')
-unfriendBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-        fetch(`http://localhost:5000/friend_action`,{
+document.addEventListener('click', (e) => {
+    if (e.target.classList.contains('fa-user-minus')) {
+        fetch(`http://localhost:5000/friend_action`, {
             method: 'GET'
         }).then(
             response => response.json()
@@ -462,7 +530,7 @@ unfriendBtns.forEach(btn => {
                 console.log(JSON.stringify(response))
             }
         )
-    })
+    }
 })
 
 var offSet = 2
@@ -470,9 +538,9 @@ const limit = 2
 
 const observer = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
-        if (entry.isIntersecting){
+        if (entry.isIntersecting) {
             entry.target.classList.add('intersecting')
-            fetch(`http://localhost:5000/post/load_posts?offset=${offSet}&limit=${limit}`,{
+            fetch(`http://localhost:5000/post/load_posts?offset=${offSet}&limit=${limit}`, {
                 method: 'GET',
             }).then(
                 response => response.json()
@@ -488,14 +556,14 @@ const observer = new IntersectionObserver((entries) => {
         }
     })
 },
-{
-    threshold: 0.2
-}
+    {
+        threshold: 0.2
+    }
 )
 
 const loader = document.querySelectorAll('.loader')
 
-for(let i = 0; i < loader.length; i++){
+for (let i = 0; i < loader.length; i++) {
     const elements = loader[i];
 
     observer.observe(elements);
@@ -503,17 +571,17 @@ for(let i = 0; i < loader.length; i++){
 
 const loadMorePosts = (new_posts) => {
     new_posts.forEach(post => {
-        feed = document.createElement( 'div' );
+        feed = document.createElement('div');
         feed.classList.add('feed')
         feed.id = post['id']
 
-        head = document.createElement( 'div' );
+        head = document.createElement('div');
         head.classList.add('head')
 
-        user = document.createElement( 'div' );
+        user = document.createElement('div');
         user.classList.add('user')
 
-        profilePhoto = document.createElement( 'div' );
+        profilePhoto = document.createElement('div');
         profilePhoto.classList.add('profile-photo')
 
         profileImg = document.createElement('img');
@@ -521,12 +589,12 @@ const loadMorePosts = (new_posts) => {
 
         profilePhoto.appendChild(profileImg)
 
-        ingo = document.createElement( 'div' );
+        ingo = document.createElement('div');
         ingo.classList.add('ingo')
 
-        h3 = document.createElement( 'h3' );
+        h3 = document.createElement('h3');
         h3.innerHTML = post['author_name']
-        small = document.createElement( 'small' );
+        small = document.createElement('small');
         small.innerHTML = `${post["location"]}, ${post["publish_time"]} AGO`
 
         ingo.appendChild(h3)
@@ -538,15 +606,26 @@ const loadMorePosts = (new_posts) => {
         span = document.createElement('span')
         span.classList.add('edit')
         span.innerHTML = `
-            <i class="uil uil-ellipsis-h" id="context-dropdown"></i>
-                                
-            <div class="context-menu">
-                <div class="dropdownmenu">
-                    <div class="card">
+        <i class="uil uil-ellipsis-h post-menu-btn"></i>
 
+        <div class="post-menu">
+            <div class="dropdownmenu">
+                <div class="card">
+                    <div class="befriend ctx-menu">
+                        <span>
+                            <i class="fa-solid fa-user-plus"></i>
+                        </span>
+                        <small class="menu-item">Befriend</small>
+                    </div>
+                    <div class="unfriend ctx-menu">
+                        <span>
+                            <i class="fa-solid fa-user-minus" ></i>
+                        </span>
+                        <small class="menu-item">Unfriend</small>
                     </div>
                 </div>
             </div>
+        </div>
         `
         head.appendChild(user)
         head.appendChild(span)
@@ -556,7 +635,7 @@ const loadMorePosts = (new_posts) => {
         postText.classList.add('text-muted')
         postText.innerHTML = post['text']
 
-        postPhoto = document.createElement( 'div' );
+        postPhoto = document.createElement('div');
         postPhoto.classList.add('photo')
 
         postImg = document.createElement('img');
@@ -596,8 +675,8 @@ const loadMorePosts = (new_posts) => {
         form.classList.add('comment-box')
         form.classList.add('comment-form')
         form.method = 'post'
-        form.action = `http://localhost:5000/post/comment?post_id=${ post.id }&user_id=${ post.user_id }`
-        
+        form.action = `http://localhost:5000/post/comment?post_id=${post.id}&user_id=${post.user_id}`
+
         createText = document.createElement('div')
         createText.classList.add('create-text')
 
@@ -605,7 +684,7 @@ const loadMorePosts = (new_posts) => {
         commentProfile.classList.add('profile-photo')
         commentProfile.classList.add('profile-menu')
         commentProfile.id = post['user_id']
-        
+
         commentProfileImg = document.createElement('img')
         commentProfileImg.src = post['author_image']
 
@@ -645,7 +724,7 @@ const loadMorePosts = (new_posts) => {
         })
 
         top_like = document.createElement('p')
-        top_like.innerHTML = `Liked by <b>${ post['influencer'] }</b> and ${ post['likes_count'] } others`
+        top_like.innerHTML = `Liked by <b>${post['influencer']}</b> and ${post['likes_count']} others`
 
         liked_by.appendChild(top_like)
 
@@ -653,14 +732,14 @@ const loadMorePosts = (new_posts) => {
         caption.classList.add('caption')
 
         captionParagraph = document.createElement('p')
-        captionParagraph.innerHTML = `<b>${ post.comment['author'] }</b> ${ post['comment']['text'] }`
+        captionParagraph.innerHTML = `<b>${post.comment['author']}</b> ${post['comment']['text']}`
 
         caption.appendChild(captionParagraph)
 
         viewComments = document.createElement('div')
         viewComments.classList.add('comments')
         viewComments.classList.add('text-muted')
-        viewComments.innerHTML = `View all ${ post.comments_count } comments`
+        viewComments.innerHTML = `View all ${post.comments_count} comments`
 
         feed.appendChild(head)
         feed.appendChild(postText)
@@ -673,5 +752,5 @@ const loadMorePosts = (new_posts) => {
 
         posts.appendChild(feed, posts.firstChild)
     })
-    
+
 }

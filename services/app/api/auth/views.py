@@ -31,6 +31,7 @@ from .controller.auth import (
     handle_reset_password,
     handle_reset_request,
     handle_send_confirm_account_email,
+    handle_get_user,
 )
 
 auth = Blueprint("auth", __name__)
@@ -43,7 +44,7 @@ def register():
         return redirect(url_for("home.home_page"))
     if request.method == "POST":
         # hadle the image
-        return handle_create_user(request.form)
+        return handle_create_user(request.form, request.files)
     return render_template("auth/register.html"), HTTP_200_OK
 
 
@@ -101,10 +102,16 @@ def logout():
     return redirect(url_for("auth.login")), HTTP_307_TEMPORARY_REDIRECT
 
 
-@login_required
-@auth.route("/update", methods=["POST"])
+@auth.route("/update", methods=["PUT"])
 def update():
     """Update a logged in user."""
+    print(request.args.get('user_id'))
     print(request.form)
     print(request.files)
     return jsonify({"resp": "data received"})
+
+
+@auth.route("/get", methods=["GET"])
+def get_user():
+    """Get user."""
+    return handle_get_user(request.args.get('user_id'))

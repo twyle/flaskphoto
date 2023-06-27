@@ -10,6 +10,7 @@ from ...extensions.extensions import db
 from ..models.like_model import Like
 from ..models.comment_model import Comment
 import random
+from flask_login import current_user
 
 ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'}
 
@@ -114,7 +115,7 @@ def handle_delete_post(post_id: str) -> tuple[str, int]:
 
 def handle_like(post_id: str) -> tuple[str, int]:
     """Like or unlike a post."""
-    user_id = session['user_id']
+    user_id = current_user.id
     like = Like.query.filter(Like.user_id==user_id and Like.post_id==int(post_id)).first()
     if like:
         db.session.delete(like)

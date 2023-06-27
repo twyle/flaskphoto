@@ -1,8 +1,9 @@
 """This module contains routes for the app."""
-from flask import Blueprint, render_template, jsonify, url_for
+from flask import Blueprint, render_template, jsonify, url_for, request
 from flask_login import current_user, login_required
 from ..post.models.post_model import Post
 from datetime import datetime
+from .controller.home import handle_befriend
 
 from ..utils.http_status_codes import HTTP_200_OK
 from .controller.home import handle_load_posts
@@ -18,7 +19,12 @@ def home_page():
     """Render the home page."""
     return handle_load_posts()
 
-@home.route("/friend_action")
-def friend_action():
+@home.route("/befriend")
+def befriend():
     """Render the home page."""
-    return jsonify({'success': 'friend action'}), HTTP_200_OK
+    return handle_befriend(request.args)
+
+@home.route("/unfriend")
+def unfriend():
+    """Render the home page."""
+    return jsonify({'success': 'unfriend'}), HTTP_200_OK

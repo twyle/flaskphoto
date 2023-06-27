@@ -18,15 +18,15 @@
     <!-----------------------NAVBAR------------------------------>
     <nav>
         <div class="container">
-            <h2 class="logo">flaskphoto</h2>
+            <h2 class="logo">logo</h2>
             <div class="search-bar">
                 <i class="uil uil-search"></i>
                 <input type="search" name="" id="" placeholder="Search for creators, inspirations and projects.">
             </div>
             <div class="create">
                 <button class="btn btn-primary create-post-btn">Create Post</button>
-                <div class="profile-photo">
-                    <img src="{{ url_for('static', filename='img/default.jpeg') }}" alt="">
+                <div class="profile-photo" id="{{ user.user_id }}">
+                    <img src="{{ user.image }}" alt="">
                 
                 </div>
             </div>
@@ -90,13 +90,13 @@
                                             <div class="card">
                                                 <div class="befriend ctx-menu">
                                                     <span>
-                                                        <i class="fa-solid fa-user-plus"></i>
+                                                        <i class="fa-solid fa-user-plus" userid="{{ user.user_id }}" friendid="{{ post.user_id }}"></i>
                                                     </span>
                                                     <small class="menu-item">Befriend</small>
                                                 </div>
                                                 <div class="unfriend ctx-menu">
                                                     <span>
-                                                        <i class="fa-solid fa-user-minus" ></i>
+                                                        <i class="fa-solid fa-user-minus" user_id="{{ user.user_id }}" friend_id="{{ post.user_id }}"></i>
                                                     </span>
                                                     <small class="menu-item">Unfriend</small>
                                                 </div>
@@ -272,19 +272,81 @@
                 <div class="head">
 
                     <div class="user">
-                        <div class="profile-photo profile-menu">
-                            <img class="profile-photo profile-menu-img" src="{{ url_for('static', filename='img/profile-2.jpg') }}"
+                        <div class="profile-photo profile-menu" id="{{ user.user_id }}">
+                            <img class="profile-photo profile-menu-img" src="{{ user.image }}"
                                 alt="">
                         </div>
                         <div class="ingo">
-                            <h3 class="edit-user-name">Lana Rose</h3>
-                            <small class="edit-user-location">Dubai, 15 MINUTES AGO</small>
+                            <h3 class="edit-user-name">{{ user.user_name }}</h3>
+                            <!-- <small class="edit-user-location">Dubai, 15 MINUTES AGO</small> -->
                         </div>
                     </div>
 
                     <span class="edit">
                         <label class="custom-file-upload">
-                            <i class="uil uil-image-plus post-image-upload"></i>
+                            <i class="uil uil-image-plus profile-image-update"></i>
+                        </label>
+                    </span>
+
+                </div>
+            </div>
+
+            <div class="form-box">
+
+                <form action="" method="PUT" class="edit-profile-form" id="{{ user.user_id }}">
+                    <div class="input-group">
+
+                        <div class="input-field">
+                            <i class="uil uil-user-circle"></i>
+                            <input type="text" name="username" placeholder="{{ user.user_name }}">
+                        </div>
+
+                        <div class="input-field">
+                            <i class="uil uil-envelope-alt"></i>
+                            <input type="email" name="email" placeholder="{{ user.email }}">
+                        </div>
+
+                        <div class="input-field">
+                            <i class="uil uil-user-circle"></i>
+                            <input type="text" name="handle" placeholder="{{ user.handle }}">
+                        </div>
+
+                    </div>
+
+                    <div class="btn-field">
+                        <button type="submit">Update Profile</button>
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+
+    </div>
+    <!--------- END OF EDIT PROFILE ----------->
+
+    <!--------- VIEW PROFILE ----------->
+    <div class="view-profile form">
+
+        <div class="card">
+            <h1>View Profile</h1>
+
+            <div class="feed">
+                <div class="head">
+
+                    <div class="user">
+                        <div class="profile-photo profile-menu" id="{{ user.user_id }}">
+                            <img class="profile-photo profile-menu-img" src="{{ user.image }}"
+                                alt="">
+                        </div>
+                        <div class="ingo">
+                            <h3 class="edit-user-name">{{ user.user_name }}</h3>
+                        </div>
+                    </div>
+
+                    <span class="edit">
+                        <label class="close-profile">
+                            <i class="fa fa-times" aria-hidden="true"></i>
                         </label>
                     </span>
 
@@ -298,24 +360,24 @@
 
                         <div class="input-field">
                             <i class="uil uil-user-circle"></i>
-                            <input type="text" name="" placeholder="Name">
+                            <input type="text" name="" placeholder="" id="user-name" readonly>
                         </div>
 
                         <div class="input-field">
                             <i class="uil uil-envelope-alt"></i>
-                            <input type="email" name="" placeholder="Email">
+                            <input type="email" name="" placeholder="" id="email" readonly>
                         </div>
 
                         <div class="input-field">
-                            <i class="uil uil-padlock"></i>
-                            <input type="password" name="" placeholder="Handle">
+                            <i class="uil uil-user-circle"></i>
+                            <input type="text" name="" placeholder="" id="handle" readonly>
                         </div>
 
                     </div>
 
-                    <div class="btn-field">
-                        <button type="button">Update Profile</button>
-                    </div>
+                    <!-- <div class="btn-field">
+                        <button type="button">Create Story</button>
+                    </div> -->
 
                 </form>
 
@@ -323,7 +385,7 @@
         </div>
 
     </div>
-    <!--------- END OF EDIT PROFILE ----------->
+    <!--------- END OF View PROFILE ----------->
 
     <!--------- EDIT POST ----------->
     <div class="edit-post">
@@ -430,57 +492,7 @@
         </div>
 
     </div>
-    <!-----END OF POST COMMENTS POPUP----------->
 
-    <!-----VIEW PROFILE----------->
-    <div class="view-user-profile">
-        <div class="card">
-
-            <div class="feed">
-                <div class="head">
-
-                    <div class="user">
-                        <div class="profile-photo profile-menu">
-                            <img class="profile-photo profile-menu-img" src="{{ url_for('static', filename='img/profile-2.jpg') }}"
-                                alt="">
-                        </div>
-                        <div class="ingo">
-                            <h3 class="edit-user-name">Lana Rose</h3>
-                            <small class="edit-user-location">Dubai, 15 MINUTES AGO</small>
-                        </div>
-                    </div>
-
-                    <span class="edit">
-                        <label class="close-profile">
-                            <i class="fa fa-times" aria-hidden="true"></i>
-                        </label>
-                    </span>
-
-                </div>
-
-                <div class="post-text text-muted">
-                    Some really short, interesting post text.
-                </div>
-
-                <div class="view-posts">
-                    <div class="previous">
-                        <i class="fa fa-angle-left" aria-hidden="true"></i>
-                    </div>
-                    <div class="photo">
-                        <img class="post-photo" src="{{ url_for('static', filename='img/feed-1.jpg') }}" alt="">
-                    </div>
-                    <div class="next">
-                        <i class="fa fa-angle-right" aria-hidden="true"></i>
-                    </div>
-                </div>
-            </div>
-
-            <button class="btn btn-primary create-post-btn">Create Story</button>
-
-        </div>
-
-    </div>
-    <!-----END OF POST COMMENT BOX----------->
 
             <script src="{{ url_for('static', filename='js/index.js') }}"></script>
 

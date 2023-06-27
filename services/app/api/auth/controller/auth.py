@@ -27,9 +27,30 @@ from .helpers import (
     send_confirm_account_email,
     send_reset_password_email,
 )
+from werkzeug.datastructures import FileStorage
+from flask import current_app, jsonify
+import os
+import secrets
+from ...utils.http_status_codes import HTTP_200_OK
 
 
-def create_user(user_data: dict):
+ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'}
+
+def allowed_file(filename: str) -> bool:
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+
+def save_user_photo(post_image: dict) -> None:
+    """Save the uploadeded post image."""
+    file: FileStorage = post_image['file']
+    upload_folder = os.path.join(current_app.root_path, 'static', 'img')
+    if file and allowed_file(file.filename):
+        filename = secrets.token_hex(8)
+        file.save(os.path.join(upload_folder, filename))
+    return filename
+
+
+def create_user(user_data: dict, user_image: dict):
     """Handle the post request to create a new user."""
     if len(user_data["name"]) < 2:
         raise NameTooShortException("The user name has to be atleast 2 characters.")
@@ -54,18 +75,20 @@ def create_user(user_data: dict):
     hashed_password = bcrypt.generate_password_hash(user_data["password"]).decode(
         "utf-8"
     )
+    filename = save_user_photo(user_image)
     user = User(
-        username=user_data["name"], email=user_data["email"], password=hashed_password
+        username=user_data["name"], email=user_data["email"], password=hashed_password,
+        image_file=filename
     )
     db.session.add(user)
     db.session.commit()
     # send_confirm_account_email(user_data["email"])
 
 
-def handle_create_user(user_data: dict):
+def handle_create_user(user_data: dict, user_image: dict):
     """Handle the post request to create a new user."""
     try:
-        create_user(user_data=user_data)
+        create_user(user_data=user_data, user_image=user_image)
     except (NameTooShortException, NameTooLongException, NameExistsException) as e:
         return render_template("auth/register.html", error_message={"name": str(e)})
     except (InvalidEmailAddressFormatException, EmailAddressExistsException) as e:
@@ -207,3 +230,17 @@ def handle_reset_password(token: str, user_data: dict):
         return render_template(
             "auth/resetpassword.html", errors={"confirm_password": str(e)}
         )
+
+
+def handle_get_user(user_id: str) -> tuple[str, int]:
+    """Get a user."""
+    raw_user = User.query.filter_by(id=int(user_id)).first()
+    if raw_user:
+        user = {
+            'user_name': raw_user.username,
+            'image': url_for('static', filename=f'img/{raw_user.image_file}'),
+            'user_id': raw_user.id,
+            'email': raw_user.email,
+            'handle': f'@{"".join(raw_user.username.split())}'
+    }
+        return jsonify(user), HTTP_200_OK
